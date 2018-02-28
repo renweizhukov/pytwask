@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field_no_label %}
+
+{% block title %}
+    {% if username %}
+        Pytwis -- {{ username }}'s Timeline
+    {% else %}
+        Pytwis -- Recent Timeline
+    {% endif %}
+{% endblock %}
+
+{% block buttons %}
+    <ul>
+        {% if username %}
+            <li><a href="{{ url_for('general_timeline') }}">Recent Timeline</a></li>
+            <li><a href="#">Settings</a></li>
+        {% else %}
+            <li><a href="{{ url_for('index') }}">Main</a></li>
+            <li><a href="{{ url_for('user_timeline') }}">Your Timeline</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block sidebar %}
+    {% if username %}
+        <aside>
+            <article class=flashes>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+            </article>
+    
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <table>
+                    <tr>
+                        <textarea name="tweet" style="color:black;"></textarea>
+                    </tr>
+                
+                    <tr>
+                        <td> <input type="submit" value="Post" style="float:right;color:black;"></td>
+                    </tr>
+                </table>
+            </form>
+        </aside>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <article>
+        <header>
+            <h1>
+                {% if username %}
+                    {{ username }}'s Timeline
+                {% else %}
+                    Recent Timeline
+                {% endif %}
+            </h1>
+        </header>
+        
+        {% if tweets %}
+            {% for tweet in tweets %}
+                <section>
+                    <h3>From: {{ tweet.username }}</h3>
+                    <h3>Time: {{ tweet.time }}</h3>
+                    <p style="white-space: pre-wrap;">{{ tweet.body }}</p>
+                </section>
+            {% endfor %}
+        {% else %}
+            No tweets yet.
+        {% endif %}
+        
+    </article>
+{% endblock %}

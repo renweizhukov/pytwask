@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block title %}
+Pytwis -- Welcome
+{% endblock %}
+
+{% block buttons %}
+    <ul>
+        <li><a href="{{ url_for('general_timeline') }}">Recent Timeline</a></li>
+        <li><a href="#">Sign up</a></li>
+    </ul>
+{% endblock %}
+
+{% block sidebar %}
+    <aside>
+        <article class=flashes>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </article>
+    
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <table>
+                {{ render_field(form.username, size=15, style="color:black;") }}
+                {{ render_field(form.password, size=15, style="color:black;") }}
+                
+                <tr>
+                    <td></td>
+                    <td> <input type="submit" value="Sign in" style="float:right;color:black;"></td>
+                </tr>
+            </table>
+        </form>
+    </aside>
+{% endblock %}
+
+{% block content %}
+    <article>
+        <header>
+            <h1>Welcome</h1>
+            <p>Pytwis is a simple twitter clone powered by python, flask, and redis.</p>
+        </header>
+        <section>
+            <h2>Github repositories</h2>
+            <ol>
+                <li>Frontend: pytwask (<a href="https://github.com/renweizhukov/pytwask">https://github.com/renweizhukov/pytwask</a>)</li>
+                <li>Backend: pytwis (<a href="https://github.com/renweizhukov/pytwis">https://github.com/renweizhukov/pytwis</a>)</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Contributors</h2>
+            <ul>
+                <li><a href="mailto:renwei2004@gmail.com">Wei Ren</a></li>
+                <li><a href="mailto:iambjlee@hotmail.com">BJ Lee</a></li>
+                <li><a href="mailto:gavinjhe@hotmail.com">Gavin He</a></li>
+                <li><a href="mailto:beyond_ml@hotmail.com">Lei Ma</a></li>
+            </ul>
+        </section>
+    </article>
+{% endblock %}
