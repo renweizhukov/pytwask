@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block title %}
+Pytwis -- Signup
+{% endblock %}
+
+{% block buttons %}
+    <ul>
+        <li><a href="{{ url_for('index') }}">Main</a></li>
+        <li><a href="{{ url_for('general_timeline') }}">Recent Timeline</a></li>
+    </ul>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+    <section>
+        <h1 style="clear:both">Create an account</h1>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <table>
+                {{ render_field(form.username, size=50) }}
+                {{ render_field(form.password, size=50) }}
+                {{ render_field(form.password2, size=50) }}
+                
+                <tr class="submit">
+                    <td></td>
+                    <td><button type="submit">Sign up</button></td>
+                </tr>
+            </table>
+        </form>
+    </section>
+{% endblock %}

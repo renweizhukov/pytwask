@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% from "form_macros.html" import render_field_no_label %}
 
 {% block title %}
     {% if username %}
@@ -13,9 +12,10 @@
     <ul>
         {% if username %}
             <li><a href="{{ url_for('general_timeline') }}">Recent Timeline</a></li>
-            <li><a href="#">Settings</a></li>
+            <li><a href="{{ url_for('user_settings') }}">Settings</a></li>
         {% else %}
             <li><a href="{{ url_for('index') }}">Main</a></li>
+            <!-- TODO: Only show this if current_user.is_authenticated is True -->
             <li><a href="{{ url_for('user_timeline') }}">Your Timeline</a></li>
         {% endif %}
     </ul>
@@ -48,6 +48,8 @@
                     </tr>
                 </table>
             </form>
+            
+            <!-- TODO: Add follow/unfollow button if this is not the current user. -->
         </aside>
     {% endif %}
 {% endblock %}
@@ -64,13 +66,18 @@
             </h1>
         </header>
         
+        <br>
+        
         {% if tweets %}
             {% for tweet in tweets %}
                 <section>
+                    <!-- TODO: Add the link to the timeline of the user who may not be the logged-in user. -->
                     <h3>From: {{ tweet.username }}</h3>
                     <h3>Time: {{ tweet.time }}</h3>
                     <p style="white-space: pre-wrap;">{{ tweet.body }}</p>
                 </section>
+                
+                <br>
             {% endfor %}
         {% else %}
             No tweets yet.
