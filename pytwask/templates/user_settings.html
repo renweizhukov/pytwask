@@ -9,6 +9,7 @@ Pytwis -- {{ username }}'s Settings
     <ul>
         <li><a href="{{ url_for('index') }}">Main</a></li>
         <li><a href="{{ url_for('user_timeline') }}">Your Timeline</a></li>
+        <li><a href="{{ url_for('signout') }}">Sign out</a></li>
     </ul>
 {% endblock %}
 
@@ -18,16 +19,46 @@ Pytwis -- {{ username }}'s Settings
 {% block content %}
     <section>
         <h1 style="clear:both">Following</h1>
+        
+        {% if followings %}
+            {% for following in followings %}
+                <!-- TODO: Add the link to the user tweet history. -->
+                <h3>{{ following }}</h3>
+            {% endfor %}
+        {% else %}
+            No followings yet.
+        {% endif %}
     </section>
     
     <br>
     
     <section>
         <h1 style="clear:both">Followed by</h1>
+        
+        {% if followers %}
+            {% for follower in followers %}
+             <!-- TODO: Add the link to the user tweet history. -->
+             <h3>{{ follower }}</h3>
+            {% endfor %}
+        {% else %}
+            No follower yet.
+        {% endif %}
     </section>
 
     <br>
 
+    <section class=flashes>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </section>
+    
     <section>
         <h1 style="clear:both">Change your password</h1>
         <form action="" method="post">

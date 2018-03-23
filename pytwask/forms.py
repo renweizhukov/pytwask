@@ -5,29 +5,16 @@ Courtesy of http://flask.pocoo.org/snippets/64/
 '''
 
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField
+from wtforms.fields import StringField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, Regexp, EqualTo,\
     ValidationError
 
 class SignInForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    
-    def __init__(self, *args, **kwargs):
-        FlaskForm.__init__(self, *args, **kwargs)
-        self.user = None
+    remember_me = BooleanField('Keep me logged in')
 
-    def check_login_credentials(self):
-        """
-        Check the login credentials (username, password).
-        """
-        # TODO: Check the login credentials (username, password) match 
-        # the record in the backend database.
-        if self.username.data == 'renwei' and self.password.data == '111111':
-            return True
-        else:
-            return False
-        
+
 class SignUpForm(FlaskForm):
     username = StringField('Username', 
                            validators=[

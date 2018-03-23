@@ -8,37 +8,45 @@ Pytwis -- Welcome
 {% block buttons %}
     <ul>
         <li><a href="{{ url_for('general_timeline') }}">Recent Timeline</a></li>
-        <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+        {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('user_timeline') }}">Your Timeline</a></li>
+            <li><a href="{{ url_for('signout') }}">Sign out</a></li>
+        {% else %}
+            <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+        {% endif %}
     </ul>
 {% endblock %}
 
 {% block sidebar %}
-    <aside>
-        <article class=flashes>
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
-        </article>
-    
-        <form action="" method="post">
-            {{ form.hidden_tag() }}
-            <table>
-                {{ render_field(form.username, size=15, style="color:black;") }}
-                {{ render_field(form.password, size=15, style="color:black;") }}
-                
-                <tr>
-                    <td></td>
-                    <td> <input type="submit" value="Sign in" style="float:right;color:black;"></td>
-                </tr>
-            </table>
-        </form>
-    </aside>
+    {% if not current_user.is_authenticated %}
+	    <aside>
+	        <article class=flashes>
+	            {% with messages = get_flashed_messages() %}
+	                {% if messages %}
+	                    <ul>
+	                    {% for message in messages %}
+	                        <li>{{ message }}</li>
+	                    {% endfor %}
+	                    </ul>
+	                {% endif %}
+	            {% endwith %}
+	        </article>
+	    
+	        <form action="" method="post">
+	            {{ form.hidden_tag() }}
+	            <table>
+	                {{ render_field(form.username, size=15, style="color:black;") }}
+	                {{ render_field(form.password, size=15, style="color:black;") }}
+	                {{ render_field(form.remember_me, style="color:black;") }}
+	                
+	                <tr>
+	                    <td></td>
+	                    <td> <input type="submit" value="Sign in" style="float:right;color:black;"></td>
+	                </tr>
+	            </table>
+	        </form>
+	    </aside>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
