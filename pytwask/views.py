@@ -1,37 +1,11 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import datetime
+from flask import flash, redirect, render_template, url_for
+from flask_login import login_user, logout_user, login_required, current_user
 
-from flask import Flask, flash, redirect, render_template, url_for
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from flask_moment import Moment
-from flask_debugtoolbar import DebugToolbarExtension
-
-from forms import PostTweetForm, SignInForm, SignUpForm, ChangePasswordForm
-
-# Configure authentication
-login_manager = LoginManager()
-login_manager.session_protection = 'strong'
-login_manager.login_view = 'index'
-
-# Enable debugtoolbar
-toolbar = DebugToolbarExtension()
-
-# For displaying timestamps
-moment = Moment()
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = b'c\x04\x14\x00;\xe44 \xf4\xf3-_9B\x1d\x15u\x02g\x1a\xcc\xd8\x04~'
-# Change the duration of how long the Remember Cookie is valid on the users computer. 
-# This can not really be trusted as a user can edit it. 
-app.config["REMEMBER_COOKIE_DURATION"] = datetime.timedelta(days=7)
-
-login_manager.init_app(app)
-moment.init_app(app)
-toolbar.init_app(app)
-
-from models import Tweet, User
+from pytwask import app, login_manager
+from pytwask.forms import PostTweetForm, SignInForm, SignUpForm, ChangePasswordForm
+from pytwask.models import Tweet, User
 
 @login_manager.user_loader
 def load_user(session_token):
@@ -133,7 +107,3 @@ def page_not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500  
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
