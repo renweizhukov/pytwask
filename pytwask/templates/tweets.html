@@ -1,0 +1,14 @@
+{% if tweets %}
+    {% for tweet in tweets %}
+        <section>
+            <!-- TODO: Add the link to the timeline of the user who may not be the logged-in user. -->
+            <h3>From: {{ tweet.username }}</h3>
+            <h3>Time: {{ tweet.post_time }}</h3>
+            <p style="white-space: pre-wrap;">{{ tweet.body }}</p>
+        </section>
+        
+        <br>
+    {% endfor %}
+{% else %}
+    No tweets yet.
+{% endif %}

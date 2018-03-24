@@ -73,6 +73,10 @@ class User(UserMixin):
             print('Failed to get the timeline of {} with error = {}'.format(self.username, result['error']))
             return []
         
+    def get_general_timeline(self):
+        """Get the general timeline."""
+        return Tweet.get_general_timeline()
+        
     def post_tweet(self, body):
         """Post a tweet."""
         succeeded, result = twis.post_tweet(self.auth_secret, body)

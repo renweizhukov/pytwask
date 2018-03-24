@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_user, logout_user, login_required, current_user
 
 from pytwask import app, login_manager
@@ -19,7 +19,7 @@ def index():
         user = User.get_by_username_and_password(form.username.data, form.password.data)
         if user is not None:
             login_user(user, form.remember_me.data)
-            return redirect(url_for('user_timeline', username=user.username, tweets=user.get_user_timeline()))
+            return redirect(request.args.get('next') or url_for('user_timeline'))
         else:
             flash("Invalid username or password")
 
@@ -34,7 +34,7 @@ def signout():
 
 @app.route('/general_timeline')
 def general_timeline():
-    return render_template('timeline.html', tweets=Tweet.get_general_timeline())
+    return render_template('timeline.html', general=True)
 
 
 @app.route('/user_timeline', methods=['GET', 'POST'])
@@ -47,15 +47,9 @@ def user_timeline(username=None):
             flash('Tweet successfully posted')
         except ValueError as e:
             flash(str(e))
-            return render_template('timeline.html', 
-                                   username=current_user.username, 
-                                   tweets=current_user.get_user_timeline(), 
-                                   form=form)
+            return render_template('timeline.html', general=False, form=form)
     
-    return render_template('timeline.html', 
-                           username=current_user.username, 
-                           tweets=current_user.get_user_timeline(), 
-                           form=form)
+    return render_template('timeline.html', general=False, form=form)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -83,15 +77,9 @@ def user_settings():
             flash('Password successfully changed')
         except ValueError as e:
             flash(str(e))
-            return render_template('user_settings.html', 
-                                   followings=current_user.get_followings(), 
-                                   followers=current_user.get_followers(),
-                                   form=form)
+            return render_template('user_settings.html', form=form)
             
-    return render_template('user_settings.html', 
-                           followings=current_user.get_followings(), 
-                           followers=current_user.get_followers(),
-                           form=form)
+    return render_template('user_settings.html', form=form)
 
 
 @app.errorhandler(403)

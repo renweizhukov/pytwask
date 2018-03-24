@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {% if username %}
-        Pytwis -- {{ username }}'s Timeline
+    {% if not general %}
+        Pytwis -- {{ current_user.username }}'s Timeline
     {% else %}
         Pytwis -- Recent Timeline
     {% endif %}
@@ -10,7 +10,7 @@
 
 {% block buttons %}
     <ul>
-        {% if username %}
+        {% if not general %}
             <li><a href="{{ url_for('general_timeline') }}">Recent Timeline</a></li>
             <li><a href="{{ url_for('user_settings') }}">Settings</a></li>
             <li><a href="{{ url_for('signout') }}">Sign out</a></li>
@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block sidebar %}
-    {% if username %}
+    {% if not general %}
         <aside>
             <article class=flashes>
                 {% with messages = get_flashed_messages() %}
@@ -61,8 +61,8 @@
     <article>
         <header>
             <h1>
-                {% if username %}
-                    {{ username }}'s Timeline
+                {% if not general %}
+                    {{ current_user.username }}'s Timeline
                 {% else %}
                     Recent Timeline
                 {% endif %}
@@ -71,19 +71,14 @@
         
         <br>
         
-        {% if tweets %}
-            {% for tweet in tweets %}
-                <section>
-                    <!-- TODO: Add the link to the timeline of the user who may not be the logged-in user. -->
-                    <h3>From: {{ tweet.username }}</h3>
-                    <h3>Time: {{ tweet.post_time }}</h3>
-                    <p style="white-space: pre-wrap;">{{ tweet.body }}</p>
-                </section>
-                
-                <br>
-            {% endfor %}
+        {% if not general %}
+	        {% with tweets = current_user.get_user_timeline() %}
+		        {% include "tweets.html" %}
+	        {% endwith %}
         {% else %}
-            No tweets yet.
+            {% with tweets = current_user.get_general_timeline() %}
+                {% include "tweets.html" %}
+            {% endwith %}
         {% endif %}
         
     </article>

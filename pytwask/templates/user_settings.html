@@ -2,7 +2,7 @@
 {% from "form_macros.html" import render_field %}
 
 {% block title %}
-Pytwis -- {{ username }}'s Settings
+Pytwis -- {{ current_user.username }}'s Settings
 {% endblock %}
 
 {% block buttons %}
@@ -20,14 +20,16 @@ Pytwis -- {{ username }}'s Settings
     <section>
         <h1 style="clear:both">Following</h1>
         
-        {% if followings %}
-            {% for following in followings %}
-                <!-- TODO: Add the link to the user tweet history. -->
-                <h3>{{ following }}</h3>
-            {% endfor %}
-        {% else %}
-            No followings yet.
-        {% endif %}
+        {% with followings = current_user.get_followings() %}
+	        {% if followings %}
+	            {% for following in followings %}
+	                <!-- TODO: Add the link to the user tweet history. -->
+	                <h3>{{ following }}</h3>
+	            {% endfor %}
+	        {% else %}
+	            No followings yet.
+	        {% endif %}
+        {% endwith %}
     </section>
     
     <br>
@@ -35,14 +37,16 @@ Pytwis -- {{ username }}'s Settings
     <section>
         <h1 style="clear:both">Followed by</h1>
         
-        {% if followers %}
-            {% for follower in followers %}
-             <!-- TODO: Add the link to the user tweet history. -->
-             <h3>{{ follower }}</h3>
-            {% endfor %}
-        {% else %}
-            No follower yet.
-        {% endif %}
+        {% with followers = current_user.get_followers() %}
+	        {% if followers %}
+	            {% for follower in followers %}
+	             <!-- TODO: Add the link to the user tweet history. -->
+	             <h3>{{ follower }}</h3>
+	            {% endfor %}
+	        {% else %}
+	            No follower yet.
+	        {% endif %}
+        {% endwith %}
     </section>
 
     <br>
