@@ -199,6 +199,28 @@ article.flashes {
     margin-bottom: 0.5em;
 }
 
+/* fix from layout with flashes */
+section {
+    clear: left;
+}
+
+/* tweet list styling */
+ul.tweets {
+    list-style: none none;
+    padding-left: 0;
+}
+
+.tweet {
+    padding-bottom: .5em;
+    border-top: 1px solid #7EA6BF;
+    padding: 1em 0;
+}
+
+div.info {
+    font-size: .95em;
+    color: #666666;
+}
+
 .error, .error input {
     color: red;
 }

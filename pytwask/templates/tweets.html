@@ -1,14 +1,19 @@
 {% if tweets %}
     {% for tweet in tweets %}
-        <section>
-            {% if show_username %}
-                <h3>From: <a href="{{ url_for('tweets.user_history', username=tweet.username) }}">{{ tweet.username }}</a></h3>
-            {% endif %}
-            <h3>Time: {{ tweet.post_time }}</h3>
-            <p style="white-space: pre-wrap;">{{ tweet.body }}</p>
-        </section>
+        <ul class="tweets">
+            <li>
+                <div class="info">
+                    {% if show_username %}
+                        <h3>From: <a href="{{ url_for('tweets.user_history', username=tweet.username) }}">{{ tweet.username }}</a></h3>
+                    {% endif %}
+                    {{ moment(tweet.post_datetime).fromNow() }}.
+                </div>
+                
+                <p style="white-space: pre-wrap;">{{ tweet.body }}</p>
+            </li>
+        </ul>
         
-        <br>
+        <hr>
     {% endfor %}
 {% else %}
     No tweets yet.

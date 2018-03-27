@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 from flask_login import UserMixin
 from flask.config import Config
 #from werkzeug.security import check_password_hash, generate_password_hash
 from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
-import datetime
-from datetime import datetime as dt
 import os
 
 from pytwis import Pytwis
@@ -26,18 +25,17 @@ twis = Pytwis(hostname=app_config['REDIS_DB_HOSTNAME'],
 
 class Tweet():
     """Tweet class"""
-    def __init__(self, username, post_time, body):
+    def __init__(self, username, post_unix_time, body):
         self.username = username
-        self.post_time = post_time
+        self.post_datetime = datetime.datetime.fromtimestamp(post_unix_time)
         self.body = body
         
     @staticmethod
     def get_general_timeline():
         succeeded, result = twis.get_timeline('', -1)
         if succeeded:
-            return [Tweet(tweet['username'], 
-                          dt.fromtimestamp(int(tweet['unix_time'])).strftime('%Y-%m-%d %H:%M:%S'),
-                          tweet['body']) for tweet in result['tweets']]
+            return [Tweet(tweet['username'], int(tweet['unix_time']), tweet['body']) 
+                    for tweet in result['tweets']]
         else:
             print('Failed to get the general timeline with error = {}'.format(result['error']))
             return []
@@ -67,9 +65,8 @@ class User(UserMixin):
         """Get the tweets posted by this user."""
         succeeded, result = twis.get_user_tweets(self.auth_secret, username, -1)
         if succeeded:
-            return [Tweet(tweet['username'], 
-                          dt.fromtimestamp(int(tweet['unix_time'])).strftime('%Y-%m-%d %H:%M:%S'),
-                          tweet['body']) for tweet in result['tweets']]
+            return [Tweet(tweet['username'], int(tweet['unix_time']), tweet['body']) 
+                    for tweet in result['tweets']]
         else:
             print('Failed to get the tweets posted by {} with error = {}'.format(username, result['error']))
             return []
@@ -78,9 +75,8 @@ class User(UserMixin):
         """Get the user timeline."""
         succeeded, result = twis.get_timeline(self.auth_secret, -1)
         if succeeded:
-            return [Tweet(tweet['username'], 
-                          dt.fromtimestamp(int(tweet['unix_time'])).strftime('%Y-%m-%d %H:%M:%S'),
-                          tweet['body']) for tweet in result['tweets']]
+            return [Tweet(tweet['username'], int(tweet['unix_time']), tweet['body']) 
+                    for tweet in result['tweets']]
         else:
             print('Failed to get the timeline of {} with error = {}'.format(self.username, result['error']))
             return []
