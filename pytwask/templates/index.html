@@ -7,12 +7,12 @@ Pytwask -- Welcome
 
 {% block buttons %}
     <ul>
-        <li><a href="{{ url_for('general_timeline') }}">Recent Timeline</a></li>
+        <li><a href="{{ url_for('tweets.general_timeline') }}">Recent Timeline</a></li>
         {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('user_timeline') }}">Your Timeline</a></li>
-            <li><a href="{{ url_for('signout') }}">Sign out</a></li>
+            <li><a href="{{ url_for('tweets.user_timeline') }}">Your Timeline</a></li>
+            <li><a href="{{ url_for('auth.signout') }}">Sign out</a></li>
         {% else %}
-            <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+            <li><a href="{{ url_for('auth.signup') }}">Sign up</a></li>
         {% endif %}
     </ul>
 {% endblock %}

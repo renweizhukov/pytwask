@@ -7,9 +7,9 @@ Pytwis -- {{ current_user.username }}'s Settings
 
 {% block buttons %}
     <ul>
-        <li><a href="{{ url_for('index') }}">Main</a></li>
-        <li><a href="{{ url_for('user_timeline') }}">Your Timeline</a></li>
-        <li><a href="{{ url_for('signout') }}">Sign out</a></li>
+        <li><a href="{{ url_for('auth.index') }}">Main</a></li>
+        <li><a href="{{ url_for('tweets.user_timeline') }}">Your Timeline</a></li>
+        <li><a href="{{ url_for('auth.signout') }}">Sign out</a></li>
     </ul>
 {% endblock %}
 

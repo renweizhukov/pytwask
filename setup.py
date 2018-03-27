@@ -15,4 +15,7 @@ setup(
     install_requires=[
         'flask',
     ],
+    scripts = [
+        './autopytwask.py',
+    ]
 )

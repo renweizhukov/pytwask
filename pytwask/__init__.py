@@ -7,10 +7,12 @@ from flask_login import LoginManager
 from flask_moment import Moment
 from flask_debugtoolbar import DebugToolbarExtension
 
+from .config import config_by_name
+
 # Configure authentication
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
-login_manager.login_view = 'index'
+login_manager.login_view = 'auth.index'
 
 # Enable debugtoolbar
 toolbar = DebugToolbarExtension()
@@ -18,16 +20,21 @@ toolbar = DebugToolbarExtension()
 # For displaying timestamps
 moment = Moment()
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = b'c\x04\x14\x00;\xe44 \xf4\xf3-_9B\x1d\x15u\x02g\x1a\xcc\xd8\x04~'
-# Change the duration of how long the Remember Cookie is valid on the users computer. 
-# This can not really be trusted as a user can edit it. 
-app.config["REMEMBER_COOKIE_DURATION"] = datetime.timedelta(days=7)
-# Need to set 'DEBUG` to True, otherwise the debug toolbar won't be shown.
-app.config['DEBUG'] = True
+def create_app(config_name):
+    app = Flask(__name__)
+    app.config.from_object(config_by_name[config_name])
 
-login_manager.init_app(app)
-toolbar.init_app(app)
-moment.init_app(app)
+    login_manager.init_app(app)
+    toolbar.init_app(app)
+    moment.init_app(app)
 
-from pytwask import views
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint, url_prefix='/')
+    
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    
+    from .tweets import tweets as tweets_blueprint
+    app.register_blueprint(tweets_blueprint, url_prefix='/tweets')
+    
+    return app

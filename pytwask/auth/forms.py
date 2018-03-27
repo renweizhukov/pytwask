@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-'''
+"""
 Courtesy of http://flask.pocoo.org/snippets/64/
-'''
+"""
 
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, BooleanField
@@ -31,7 +31,8 @@ class SignUpForm(FlaskForm):
     def validate_username(self, username_field):
         if False: # TODO: Check if the username is already taken in the backend database.
             raise ValidationError('This username is already taken.')
-        
+
+
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('Old password', validators=[DataRequired()])
     new_password = PasswordField('New password', 
@@ -43,6 +44,3 @@ class ChangePasswordForm(FlaskForm):
     def validate_old_password(self, old_password_field):
         if False: # TODO: Validate the old password in the backend database.
             raise ValidationError('Incorrect old password.')
-
-class PostTweetForm(FlaskForm):
-    tweet = StringField('Tweet', validators=[DataRequired()])

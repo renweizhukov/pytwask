@@ -7,8 +7,8 @@ Pytwis -- Signup
 
 {% block buttons %}
     <ul>
-        <li><a href="{{ url_for('index') }}">Main</a></li>
-        <li><a href="{{ url_for('general_timeline') }}">Recent Timeline</a></li>
+        <li><a href="{{ url_for('auth.index') }}">Main</a></li>
+        <li><a href="{{ url_for('tweets.general_timeline') }}">Recent Timeline</a></li>
     </ul>
 {% endblock %}
 

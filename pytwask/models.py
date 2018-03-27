@@ -1,15 +1,28 @@
 # -*- coding: utf-8 -*-
 
 from flask_login import UserMixin
+from flask.config import Config
 #from werkzeug.security import check_password_hash, generate_password_hash
 from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
 import datetime
 from datetime import datetime as dt
+import os
 
 from pytwis import Pytwis
 
+from .config import config_by_name
+
+# BUGBUG: Read the configuration of the Flask app again since we can't 
+# find a way to access the configuration outside an application context.
+config_name = os.getenv('PYTWASK_ENV', 'dev')
+app_config = Config(None)
+app_config.from_object(config_by_name[config_name])
+
 # Connect to the local Redis database.
-twis = Pytwis()
+twis = Pytwis(hostname=app_config['REDIS_DB_HOSTNAME'], 
+              port=app_config['REDIS_DB_PORT'], 
+              db=app_config['REDIS_DB_INDEX'], 
+              password =app_config['REDIS_DB_PASSWORD'])
 
 class Tweet():
     """Tweet class"""
@@ -31,8 +44,7 @@ class Tweet():
 
 # Login_serializer used to encryt and decrypt the cookie token for the remember
 # me option of flask-login
-# BUGBUG: Can't use app.config['SECRET_KEY'] due to circular import.
-login_serializer = URLSafeTimedSerializer(b'c\x04\x14\x00;\xe44 \xf4\xf3-_9B\x1d\x15u\x02g\x1a\xcc\xd8\x04~')
+login_serializer = URLSafeTimedSerializer(app_config['SECRET_KEY'])
 
 class User(UserMixin):
     """User class for flask-login"""
