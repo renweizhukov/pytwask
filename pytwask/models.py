@@ -63,15 +63,15 @@ class User(UserMixin):
         if not succeeded:
             raise ValueError("Couldn't change the password with error = {}".format(result['error']))
     
-    def get_user_tweets(self):
+    def get_user_tweets(self, username):
         """Get the tweets posted by this user."""
-        succeeded, result = twis.get_user_tweets(self.auth_secret, self.username, -1)
+        succeeded, result = twis.get_user_tweets(self.auth_secret, username, -1)
         if succeeded:
             return [Tweet(tweet['username'], 
                           dt.fromtimestamp(int(tweet['unix_time'])).strftime('%Y-%m-%d %H:%M:%S'),
                           tweet['body']) for tweet in result['tweets']]
         else:
-            print('Failed to get the tweets posted by {} with error = {}'.format(self.username, result['error']))
+            print('Failed to get the tweets posted by {} with error = {}'.format(username, result['error']))
             return []
         
     def get_user_timeline(self):
@@ -94,12 +94,25 @@ class User(UserMixin):
         succeeded, result = twis.post_tweet(self.auth_secret, body)
         if not succeeded:
             raise ValueError("Couldn't post the tweet with error = {}".format(result['error']))
+        
+    def follow(self, followee_username):
+        """Follow another user by his/her username."""
+        succeeded, result = twis.follow(self.auth_secret, followee_username)
+        if not succeeded:
+            raise ValueError("Couldn't follow {} with error = {}".format(result['error']))
+        
+    def unfollow(self, followee_username):
+        """Unfollow another user by his/her username."""
+        succeeded, result = twis.unfollow(self.auth_secret, followee_username)
+        if not succeeded:
+            raise ValueError("Couldn't unfollow {} with error = {}".format(result['error']))
     
     def get_followings(self):
         """Get the following list."""
         succeeded, result = twis.get_following(self.auth_secret)
         if succeeded:
-            return result['following_list']
+            # Create a set from the returned list to speed up search later.
+            return set(result['following_list'])
         else:
             print('Failed to get the following list of {} with error = {}'.format(self.username, result['error']))
             return []
@@ -108,7 +121,8 @@ class User(UserMixin):
         """Get the follower list."""
         succeeded, result = twis.get_followers(self.auth_secret)
         if succeeded:
-            return result['follower_list']
+            # Create a set from the returned list to speed up search later.
+            return set(result['follower_list'])
         else:
             print('Failed to get the follower list of {} with error = {}'.format(self.username, result['error']))
             return []

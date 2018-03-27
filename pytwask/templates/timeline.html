@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
 
 {% block title %}
     {% if not general %}
-        Pytwis -- {{ current_user.username }}'s Timeline
+        Pytwask -- {{ current_user.username }}'s Timeline
     {% else %}
-        Pytwis -- Recent Timeline
+        Pytwask -- Recent Timeline
     {% endif %}
 {% endblock %}
 
@@ -38,21 +39,14 @@
                     {% endif %}
                 {% endwith %}
             </article>
-    
+
             <form action="" method="post">
                 {{ form.hidden_tag() }}
                 <table>
-                    <tr>
-                        <textarea name="tweet" style="color:black;"></textarea>
-                    </tr>
-                
-                    <tr>
-                        <td> <input type="submit" value="Post" style="float:right;color:black;"></td>
-                    </tr>
+                    {{ render_field(form.tweet, style="color:black;") }}
+                    {{ render_field(form.submit, style="float:right;color:black;") }}
                 </table>
             </form>
-            
-            <!-- TODO: Add follow/unfollow button if this is not the current user. -->
         </aside>
     {% endif %}
 {% endblock %}

@@ -1,6 +1,10 @@
 {% macro render_field(field) %}
     <tr {% if field.errors %} class="error" {% endif %}>
-        <td>{{ field.label }} </td> 
+        <td>
+	        {% if field.name != "submit" %}
+	            {{ field.label }}
+	        {% endif %}
+        </td> 
         <td>{{ field(**kwargs)|safe }}</td>
     </tr>
     <tr class="error">

@@ -2,7 +2,7 @@
 {% from "form_macros.html" import render_field %}
 
 {% block title %}
-Pytwis -- Signup
+Pytwask -- Signup
 {% endblock %}
 
 {% block buttons %}
@@ -36,11 +36,7 @@ Pytwis -- Signup
                 {{ render_field(form.username, size=50) }}
                 {{ render_field(form.password, size=50) }}
                 {{ render_field(form.password2, size=50) }}
-                
-                <tr class="submit">
-                    <td></td>
-                    <td><button type="submit">Sign up</button></td>
-                </tr>
+                {{ render_field(form.submit, style="float:right;") }}
             </table>
         </form>
     </section>

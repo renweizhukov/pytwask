@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block title %}
+    {% if username != current_user.username %}
+        Pytwask -- {{ username }}'s Tweets
+    {% else %}
+        Pytwask -- Your Tweets
+    {% endif %}
+{% endblock %}
+
+{% block buttons %}
+    <ul>
+        <li><a href="{{ url_for('tweets.user_timeline') }}">Your Timeline</a></li>
+        <li><a href="{{ url_for('auth.user_settings') }}">Settings</a></li>
+        <li><a href="{{ url_for('auth.signout') }}">Sign out</a></li>
+    </ul>
+{% endblock %}
+
+{% block sidebar %}
+    {% if username != current_user.username %}
+        <aside>
+            <article class=flashes>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+            </article>
+    
+            {% if username not in current_user.get_followings() %}
+	            <form action="{{ url_for('tweets.follow', username=username) }}" method="post">
+	                {{ follow_form.hidden_tag() }}
+	                <table>
+	                    {{ render_field(follow_form.submit, style="float:right;color:black;") }}
+	                </table>
+	            </form>
+            {% else %}
+	            <form action="{{ url_for('tweets.unfollow', username=username) }}" method="post">
+	                {{ unfollow_form.hidden_tag() }}
+	                <table>
+	                    {{ render_field(unfollow_form.submit, style="float:right;color:black;") }}
+	                </table>
+	            </form>
+            {% endif %}
+        </aside>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <article>
+        <header>
+            <h1>
+                {% if username != current_user.username %}
+                    {{ username }}'s Tweets
+                {% else %}
+                    Your Tweets
+                {% endif %}
+            </h1>
+        </header>
+        
+        <br>
+        
+        {% with tweets = current_user.get_user_tweets(username) %}
+            {% include "tweets.html" %}
+        {% endwith %}
+        
+    </article>
+{% endblock %}

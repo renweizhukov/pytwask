@@ -2,7 +2,7 @@
 {% from "form_macros.html" import render_field %}
 
 {% block title %}
-Pytwis -- {{ current_user.username }}'s Settings
+Pytwask -- {{ current_user.username }}'s Settings
 {% endblock %}
 
 {% block buttons %}
@@ -21,14 +21,13 @@ Pytwis -- {{ current_user.username }}'s Settings
         <h1 style="clear:both">Following</h1>
         
         {% with followings = current_user.get_followings() %}
-	        {% if followings %}
-	            {% for following in followings %}
-	                <!-- TODO: Add the link to the user tweet history. -->
-	                <h3>{{ following }}</h3>
-	            {% endfor %}
-	        {% else %}
-	            No followings yet.
-	        {% endif %}
+            {% if followings %}
+                {% for following in followings %}
+                    <h3><a href="{{ url_for('tweets.user_history', username=following) }}">{{ following }}</a></h3>
+                {% endfor %}
+            {% else %}
+                No followings yet.
+            {% endif %}
         {% endwith %}
     </section>
     
@@ -38,14 +37,13 @@ Pytwis -- {{ current_user.username }}'s Settings
         <h1 style="clear:both">Followed by</h1>
         
         {% with followers = current_user.get_followers() %}
-	        {% if followers %}
-	            {% for follower in followers %}
-	             <!-- TODO: Add the link to the user tweet history. -->
-	             <h3>{{ follower }}</h3>
-	            {% endfor %}
-	        {% else %}
-	            No follower yet.
-	        {% endif %}
+            {% if followers %}
+                {% for follower in followers %}
+                    <h3><a href="{{ url_for('tweets.user_history', username=follower) }}">{{ follower }}</a></h3>
+                {% endfor %}
+            {% else %}
+                No follower yet.
+            {% endif %}
         {% endwith %}
     </section>
 
@@ -71,11 +69,7 @@ Pytwis -- {{ current_user.username }}'s Settings
                 {{ render_field(form.old_password, size=50) }}
                 {{ render_field(form.new_password, size=50) }}
                 {{ render_field(form.new_password2, size=50) }}
-                
-                <tr class="submit">
-                    <td></td>
-                    <td><button type="submit">Submit</button></td>
-                </tr>
+                {{ render_field(form.submit, style="float:right;") }}
             </table>
         </form>
     </section>

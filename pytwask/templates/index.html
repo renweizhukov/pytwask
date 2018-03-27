@@ -38,11 +38,7 @@ Pytwask -- Welcome
 	                {{ render_field(form.username, size=15, style="color:black;") }}
 	                {{ render_field(form.password, size=15, style="color:black;") }}
 	                {{ render_field(form.remember_me, style="color:black;") }}
-	                
-	                <tr>
-	                    <td></td>
-	                    <td> <input type="submit" value="Sign in" style="float:right;color:black;"></td>
-	                </tr>
+	                {{ render_field(form.submit, style="float:right;color:black;") }}
 	            </table>
 	        </form>
 	    </aside>
