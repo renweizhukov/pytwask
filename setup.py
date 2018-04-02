@@ -14,6 +14,11 @@ setup(
     include_package_data=True,
     install_requires=[
         'flask',
+        'flask_debugtoolbar',
+        'flask_login',
+        'flask_moment',
+        'flask_wtf',
+        'pytwis'
     ],
     scripts = [
         './autopytwask.py',
