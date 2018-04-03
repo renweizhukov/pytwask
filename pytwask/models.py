@@ -129,8 +129,7 @@ class User(UserMixin):
     @staticmethod
     def get(session_token):
         """Return a User instance if session_token exists; otherwise return None."""
-        # BUGBUG: Can't use app.config["REMEMBER_COOKIE_DURATION"] due to circular import.
-        max_age = datetime.timedelta(days=7).total_seconds()
+        max_age = app_config["REMEMBER_COOKIE_DURATION"].total_seconds()
         try:
             data = login_serializer.loads(session_token, max_age=max_age)
         except (BadSignature, SignatureExpired) as e:
