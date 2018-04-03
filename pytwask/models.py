@@ -14,9 +14,6 @@ from .config import config_by_name
 # BUGBUG: Read the configuration of the Flask app again since we can't 
 # find a way to access the configuration outside an application context.
 config_name = os.getenv('PYTWASK_ENV', 'dev')
-
-print("Config_Name - " + config_name)
-
 app_config = Config(None)
 app_config.from_object(config_by_name[config_name])
 
