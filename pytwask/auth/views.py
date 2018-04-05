@@ -1,9 +1,17 @@
-from flask import flash, redirect, render_template, url_for, request
+from urllib.parse import urlparse, urljoin
+from flask import flash, redirect, render_template, url_for, request, abort
 from flask_login import login_user, logout_user, login_required, current_user
 
 from . import auth
 from .forms import SignInForm, SignUpForm, ChangePasswordForm
 from ..models import User
+
+def is_safe_url(target):
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return test_url.scheme in ('http', 'https') and \
+        ref_url.netloc == test_url.netloc
+
 
 @auth.route('/', methods=['GET', 'POST'])
 def index():
@@ -12,7 +20,14 @@ def index():
         user = User.get_by_username_and_password(form.username.data, form.password.data)
         if user is not None:
             login_user(user, form.remember_me.data)
-            return redirect(request.args.get('next') or url_for('tweets.user_timeline'))
+            
+            flash('Logged in successfully.')
+            
+            next_url = request.args.get('next')
+            if not is_safe_url(next_url):
+                return abort(400)
+            
+            return redirect(next_url or url_for('tweets.user_timeline'))
         else:
             flash("Invalid username or password")
 
