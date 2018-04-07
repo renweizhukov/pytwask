@@ -1,0 +1,2 @@
+recursive-include pytwask/templates *
+recursive-include pytwask/static *

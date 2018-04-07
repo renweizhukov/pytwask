@@ -46,15 +46,14 @@ login_serializer = URLSafeTimedSerializer(app_config['SECRET_KEY'])
 
 class User(UserMixin):
     """User class for flask-login"""
-    def __init__(self, username, password, auth_secret, session_token):
+    def __init__(self, username, auth_secret, session_token):
         self.username = username
-        self.password = password
         self.auth_secret = auth_secret
         self.session_token = session_token
         
     def get_id(self):
         return str(self.session_token)
-    
+
     def change_password(self, old_password, new_password):
         """Change the password."""
         succeeded, result = twis.change_password(self.auth_secret, old_password, new_password)
@@ -139,7 +138,7 @@ class User(UserMixin):
         auth_secret = data[0]
         succeeded, result = twis.get_user_profile(auth_secret)
         if succeeded:
-            return User(result['username'], result['password'], auth_secret, session_token)
+            return User(result['username'], auth_secret, session_token)
         else:
             return None
         
@@ -152,7 +151,7 @@ class User(UserMixin):
         succeeded, result = twis.login(username, password)
         if succeeded:
             session_token = login_serializer.dumps([result['auth']])
-            return User(username, password, result['auth'], session_token)
+            return User(username, result['auth'], session_token)
         else:
             print('Failed to create a user instance with error ={}'.format(result['error']))
             return None

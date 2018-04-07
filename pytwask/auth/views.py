@@ -37,6 +37,7 @@ def index():
 @auth.route('/signout')
 def signout():
     logout_user()
+    flash('Logged out successfully.')
     return redirect(url_for('auth.index'))
 
 
