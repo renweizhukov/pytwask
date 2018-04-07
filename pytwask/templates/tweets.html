@@ -6,7 +6,7 @@
                     {% if show_username %}
                         <h3>From: <a href="{{ url_for('tweets.user_history', username=tweet.username) }}">{{ tweet.username }}</a></h3>
                     {% endif %}
-                    {{ moment(tweet.post_datetime).fromNow() }}.
+                    {{ moment(timestamp=tweet.post_datetime, local=True).fromNow() }}.
                 </div>
                 
                 <p style="white-space: pre-wrap;">{{ tweet.body }}</p>

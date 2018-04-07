@@ -86,3 +86,8 @@ def unfollow(username):
                            username=username,
                            follow_form=follow_form,
                            unfollow_form=unfollow_form)
+
+
+@tweets.app_context_processor
+def inject_general_timeline():
+    return dict(get_general_timeline=Tweet.get_general_timeline)

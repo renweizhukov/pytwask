@@ -70,7 +70,7 @@
 		        {% include "tweets.html" %}
 	        {% endwith %}
         {% else %}
-            {% with tweets = current_user.get_general_timeline() %}
+            {% with tweets = get_general_timeline() %}
                 {% include "tweets.html" %}
             {% endwith %}
         {% endif %}
