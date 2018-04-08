@@ -68,6 +68,8 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+# Set the source of GitHub pages to the orphan branch "gh-pages".
+gh-pages/
 
 # PyBuilder
 target/
