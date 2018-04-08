@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pytwask package &#8212; pytwask 0.1.2 documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pytwask.auth package" href="pytwask.auth.html" />
+    <link rel="prev" title="pytwask" href="modules.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          pytwask</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pytwask</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">pytwask package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pytwask.config">pytwask.config module</a></li>
+<li><a class="reference internal" href="#module-pytwask.models">pytwask.models module</a></li>
+<li><a class="reference internal" href="#module-pytwask">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="modules.html" title="Previous Chapter: pytwask"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; pytwask</span>
+    </a>
+  </li>
+  <li>
+    <a href="pytwask.auth.html" title="Next Chapter: pytwask.auth package"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">pytwask.auth package &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/source/pytwask.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">pytwask package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pytwask.config">pytwask.config module</a></li>
+<li><a class="reference internal" href="#module-pytwask.models">pytwask.models module</a></li>
+<li><a class="reference internal" href="#module-pytwask">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <li>
+    <a href="modules.html" title="Previous Chapter: pytwask"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; pytwask</span>
+    </a>
+  </li>
+  <li>
+    <a href="pytwask.auth.html" title="Next Chapter: pytwask.auth package"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">pytwask.auth package &raquo;</span>
+    </a>
+  </li>
+<div id="sourcelink">
+  <a href="../_sources/source/pytwask.rst.txt"
+     rel="nofollow">Source</a>
+</div>
+<form action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <div class="section" id="pytwask-package">
+<h1>pytwask package<a class="headerlink" href="#pytwask-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pytwask.auth.html">pytwask.auth package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.auth.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.auth.html#module-pytwask.auth.forms">pytwask.auth.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.auth.html#module-pytwask.auth.views">pytwask.auth.views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.auth.html#module-pytwask.auth">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pytwask.main.html">pytwask.main package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.main.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.main.html#module-pytwask.main.views">pytwask.main.views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.main.html#module-pytwask.main">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pytwask.tweets.html">pytwask.tweets package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.tweets.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.tweets.html#module-pytwask.tweets.forms">pytwask.tweets.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.tweets.html#module-pytwask.tweets.views">pytwask.tweets.views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytwask.tweets.html#module-pytwask.tweets">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pytwask.config">
+<span id="pytwask-config-module"></span><h2>pytwask.config module<a class="headerlink" href="#module-pytwask.config" title="Permalink to this headline">¶</a></h2>
+<p>This module defines the configurations of the Flask application.</p>
+<dl class="class">
+<dt id="pytwask.config.Config">
+<em class="property">class </em><code class="descclassname">pytwask.config.</code><code class="descname">Config</code><a class="headerlink" href="#pytwask.config.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The base configuration which defines the common parameters which
+will be inherited by the child configurations.</p>
+<dl class="attribute">
+<dt id="pytwask.config.Config.DEBUG">
+<code class="descname">DEBUG</code><em class="property"> = False</em><a class="headerlink" href="#pytwask.config.Config.DEBUG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.Config.REDIS_DB_HOSTNAME">
+<code class="descname">REDIS_DB_HOSTNAME</code><em class="property"> = '127.0.0.1'</em><a class="headerlink" href="#pytwask.config.Config.REDIS_DB_HOSTNAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.Config.REDIS_DB_INDEX">
+<code class="descname">REDIS_DB_INDEX</code><em class="property"> = 0</em><a class="headerlink" href="#pytwask.config.Config.REDIS_DB_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.Config.REDIS_DB_PASSWORD">
+<code class="descname">REDIS_DB_PASSWORD</code><em class="property"> = ''</em><a class="headerlink" href="#pytwask.config.Config.REDIS_DB_PASSWORD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.Config.REDIS_DB_PORT">
+<code class="descname">REDIS_DB_PORT</code><em class="property"> = 6379</em><a class="headerlink" href="#pytwask.config.Config.REDIS_DB_PORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.Config.REMEMBER_COOKIE_DURATION">
+<code class="descname">REMEMBER_COOKIE_DURATION</code><em class="property"> = datetime.timedelta(7)</em><a class="headerlink" href="#pytwask.config.Config.REMEMBER_COOKIE_DURATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.Config.SECRET_KEY">
+<code class="descname">SECRET_KEY</code><em class="property"> = b'c\x04\x14\x00;\xe44 \xf4\xf3-_9B\x1d\x15u\x02g\x1a\xcc\xd8\x04~'</em><a class="headerlink" href="#pytwask.config.Config.SECRET_KEY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pytwask.config.DevelopmentConfig">
+<em class="property">class </em><code class="descclassname">pytwask.config.</code><code class="descname">DevelopmentConfig</code><a class="headerlink" href="#pytwask.config.DevelopmentConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pytwask.config.Config" title="pytwask.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytwask.config.Config</span></code></a></p>
+<p>The configuration for development.</p>
+<dl class="attribute">
+<dt id="pytwask.config.DevelopmentConfig.DEBUG">
+<code class="descname">DEBUG</code><em class="property"> = True</em><a class="headerlink" href="#pytwask.config.DevelopmentConfig.DEBUG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.DevelopmentConfig.REDIS_DB_INDEX">
+<code class="descname">REDIS_DB_INDEX</code><em class="property"> = 1</em><a class="headerlink" href="#pytwask.config.DevelopmentConfig.REDIS_DB_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pytwask.config.ProductionConfig">
+<em class="property">class </em><code class="descclassname">pytwask.config.</code><code class="descname">ProductionConfig</code><a class="headerlink" href="#pytwask.config.ProductionConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pytwask.config.Config" title="pytwask.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytwask.config.Config</span></code></a></p>
+<p>The production configuration.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pytwask.config.TestingConfig">
+<em class="property">class </em><code class="descclassname">pytwask.config.</code><code class="descname">TestingConfig</code><a class="headerlink" href="#pytwask.config.TestingConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pytwask.config.Config" title="pytwask.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytwask.config.Config</span></code></a></p>
+<p>The configuration for testing.</p>
+<dl class="attribute">
+<dt id="pytwask.config.TestingConfig.REDIS_DB_INDEX">
+<code class="descname">REDIS_DB_INDEX</code><em class="property"> = 15</em><a class="headerlink" href="#pytwask.config.TestingConfig.REDIS_DB_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.TestingConfig.SERVER_NAME">
+<code class="descname">SERVER_NAME</code><em class="property"> = 'localhost'</em><a class="headerlink" href="#pytwask.config.TestingConfig.SERVER_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.TestingConfig.TESTING">
+<code class="descname">TESTING</code><em class="property"> = True</em><a class="headerlink" href="#pytwask.config.TestingConfig.TESTING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.TestingConfig.WTF_CSRF_ENABLED">
+<code class="descname">WTF_CSRF_ENABLED</code><em class="property"> = False</em><a class="headerlink" href="#pytwask.config.TestingConfig.WTF_CSRF_ENABLED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pytwask.models">
+<span id="pytwask-models-module"></span><h2>pytwask.models module<a class="headerlink" href="#module-pytwask.models" title="Permalink to this headline">¶</a></h2>
+<p>This module defines the two data models ‘Tweet’ and ‘User’ which
+are used by views and templates.</p>
+<dl class="class">
+<dt id="pytwask.models.Tweet">
+<em class="property">class </em><code class="descclassname">pytwask.models.</code><code class="descname">Tweet</code><span class="sig-paren">(</span><em>username</em>, <em>post_unix_time</em>, <em>body</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.Tweet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This ‘Tweet’ class encapsulates all the information related to one tweet.</p>
+<p>Note that it will convert the posted UNIX timestamp into a datetime.</p>
+<dl class="staticmethod">
+<dt id="pytwask.models.Tweet.get_general_timeline">
+<em class="property">static </em><code class="descname">get_general_timeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.Tweet.get_general_timeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the general timeline.
+Since the general timeline doesn’t belong to any user, it is defined
+as a static method of the ‘Tweet’ class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A list of ‘Tweet’ instances.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pytwask.models.User">
+<em class="property">class </em><code class="descclassname">pytwask.models.</code><code class="descname">User</code><span class="sig-paren">(</span><em>username</em>, <em>auth_secret</em>, <em>session_token</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_login.mixins.UserMixin</span></code></p>
+<p>This ‘User’ class is mainly used by flask-login to manage the user authentication.
+It can also be used to retrieve and modify user-specific data, e.g., getting user timeline,
+changing user password.</p>
+<dl class="method">
+<dt id="pytwask.models.User.change_password">
+<code class="descname">change_password</code><span class="sig-paren">(</span><em>old_password</em>, <em>new_password</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.change_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the user password.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>old_password</strong> (<em>str</em>) – The old password</li>
+<li><strong>new_password</strong> (<em>str</em>) – The new password</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If failed to change the password.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytwask.models.User.create_new_user">
+<em class="property">static </em><code class="descname">create_new_user</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.create_new_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new user with the given username and password.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>username</strong> (<em>str</em>) – </li>
+<li><strong>password</strong> (<em>str</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If failed to create the new user.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytwask.models.User.follow">
+<code class="descname">follow</code><span class="sig-paren">(</span><em>followee_username</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.follow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Follow another user by his/her username.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>followee_username</strong> (<em>str</em>) – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If failed to follow the user</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytwask.models.User.get">
+<em class="property">static </em><code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a ‘User’ instance from the session token.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session_token</strong> (<em>str</em>) – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">A ‘User’ instance if session_token exists; otherwise None.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytwask.models.User.get_by_username_and_password">
+<em class="property">static </em><code class="descname">get_by_username_and_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.get_by_username_and_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a ‘User’ instance from the username and the password.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>username</strong> (<em>str</em>) – </li>
+<li><strong>password</strong> (<em>str</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">A ‘User’ instance if username and password are correct; otherwise None.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytwask.models.User.get_followers">
+<code class="descname">get_followers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.get_followers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the follower list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A set of the usernames of the followers.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytwask.models.User.get_followings">
+<code class="descname">get_followings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.get_followings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the following list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A set of the usernames of the followings.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytwask.models.User.get_id">
+<code class="descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the user ID which is the session token in our case.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytwask.models.User.get_user_timeline">
+<code class="descname">get_user_timeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.get_user_timeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the user timeline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A list of ‘Tweet’ instances.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytwask.models.User.get_user_tweets">
+<code class="descname">get_user_tweets</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.get_user_tweets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tweets posted by a given user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>username</strong> (<em>str</em>) – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">A list of ‘Tweet’ instances.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytwask.models.User.post_tweet">
+<code class="descname">post_tweet</code><span class="sig-paren">(</span><em>body</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.post_tweet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post a tweet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>body</strong> (<em>str</em>) – The tweet body that will be posted.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If failed to post the tweet.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytwask.models.User.unfollow">
+<code class="descname">unfollow</code><span class="sig-paren">(</span><em>followee_username</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.models.User.unfollow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unfollow another user by his/her username.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>followee_username</strong> (<em>str</em>) – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If failed to unfollow the user.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pytwask">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pytwask" title="Permalink to this headline">¶</a></h2>
+<p>Package pytwask</p>
+<dl class="function">
+<dt id="pytwask.create_app">
+<code class="descclassname">pytwask.</code><code class="descname">create_app</code><span class="sig-paren">(</span><em>config_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pytwask.create_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and initialize the Flask application.</p>
+<p>Here we follow the Flask typical pattern of “Application Factories”.
+For details, please refer to:</p>
+<p><a class="reference external" href="http://flask.pocoo.org/docs/0.12/patterns/appfactories/">http://flask.pocoo.org/docs/0.12/patterns/appfactories/</a></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2018, Wei Ren.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
