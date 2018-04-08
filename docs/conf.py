@@ -164,3 +164,7 @@ texinfo_documents = [
 
 
 # -- Extension configuration -------------------------------------------------
+
+# Prevent the autodoc extension from importing pytwis when Sphinx 
+# generates the HTML documentation.
+autodoc_mock_imports = ['pytwis']
