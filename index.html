@@ -195,6 +195,19 @@ on Flask.</p>
 database, we can easily switch to another type of backend database as
 long as the backend module conforms to the same interface as the Redis
 backend module <code class="docutils literal notranslate"><span class="pre">pytwis</span></code>.</p>
+<p>By default this Flask application will connect to the Redis database via
+a TCP/IP connection. To connect to a local Redis database via a UNIX
+domain socket, define the environment variable <code class="docutils literal notranslate"><span class="pre">REDIS_DB_SOCKET</span></code> as
+the socket file (e.g., <code class="docutils literal notranslate"><span class="pre">/tmp/redis.sock</span></code>) before running the
+application.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ export REDIS_DB_SOCKET=&quot;/tmp/redis.sock&quot;
+$ export FLASK_APP=autopytwask
+$ flash run
+</pre></div>
+</div>
+<p>Note that the UNIX domain socket is by default disabled in Redis and you
+need to manually enable it in the Redis configuration file (usually
+<code class="docutils literal notranslate"><span class="pre">/etc/redis/redis.conf</span></code>) before use it.</p>
 </div>
 <div class="section" id="mtv-architecture">
 <h2>3. MTV architecture<a class="headerlink" href="#mtv-architecture" title="Permalink to this headline">¶</a></h2>

@@ -197,6 +197,11 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The base configuration which defines the common parameters which
 will be inherited by the child configurations.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If ‘REDIS_DB_SOCKET’ is specified and non-empty, it will override
+hostname and port.</p>
+</div>
 <dl class="attribute">
 <dt id="pytwask.config.Config.DEBUG">
 <code class="descname">DEBUG</code><em class="property"> = False</em><a class="headerlink" href="#pytwask.config.Config.DEBUG" title="Permalink to this definition">¶</a></dt>
@@ -220,6 +225,11 @@ will be inherited by the child configurations.</p>
 <dl class="attribute">
 <dt id="pytwask.config.Config.REDIS_DB_PORT">
 <code class="descname">REDIS_DB_PORT</code><em class="property"> = 6379</em><a class="headerlink" href="#pytwask.config.Config.REDIS_DB_PORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pytwask.config.Config.REDIS_DB_SOCKET">
+<code class="descname">REDIS_DB_SOCKET</code><em class="property"> = '/tmp/redis.sock'</em><a class="headerlink" href="#pytwask.config.Config.REDIS_DB_SOCKET" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
