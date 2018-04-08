@@ -7,10 +7,15 @@ import os
 class Config:
     """The base configuration which defines the common parameters which 
     will be inherited by the child configurations.
+    
+    Note
+    ----
+    If 'REDIS_DB_SOCKET' is specified and non-empty, it will override 
+    hostname and port.
     """
-    # TODO: Use Unix domain socket to connect to the local Redis database
     REDIS_DB_HOSTNAME = os.getenv('REDIS_DB_HOSTNAME', '127.0.0.1')
     REDIS_DB_PORT = int(os.getenv('REDIS_DB_PORT', '6379'))
+    REDIS_DB_SOCKET = os.getenv('REDIS_DB_SOCKET', '')
     REDIS_DB_INDEX = int(os.getenv('REDIS_DB_INDEX', '0'))
     REDIS_DB_PASSWORD = os.getenv('REDIS_DB_PASSWORD', '')
     SECRET_KEY = b'c\x04\x14\x00;\xe44 \xf4\xf3-_9B\x1d\x15u\x02g\x1a\xcc\xd8\x04~'

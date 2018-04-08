@@ -23,6 +23,7 @@ app_config.from_object(config_by_name[config_name])
 # Connect to the local Redis database.
 twis = Pytwis(hostname=app_config['REDIS_DB_HOSTNAME'], 
               port=app_config['REDIS_DB_PORT'], 
+              socket=app_config['REDIS_DB_SOCKET'],
               db=app_config['REDIS_DB_INDEX'], 
               password =app_config['REDIS_DB_PASSWORD'])
 
