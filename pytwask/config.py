@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+"""This module defines the configurations of the Flask application."""
 
 import datetime
 import os
 
 class Config:
+    """The base configuration which defines the common parameters which 
+    will be inherited by the child configurations.
+    """
     # TODO: Use Unix domain socket to connect to the local Redis database
     REDIS_DB_HOSTNAME = os.getenv('REDIS_DB_HOSTNAME', '127.0.0.1')
     REDIS_DB_PORT = int(os.getenv('REDIS_DB_PORT', '6379'))
@@ -16,17 +20,20 @@ class Config:
     DEBUG = False
     
 class DevelopmentConfig(Config):
+    """The configuration for development."""
     REDIS_DB_INDEX = 1
     # Need to set 'DEBUG` to True, otherwise the debug toolbar won't be shown.
     DEBUG = True
     
 class TestingConfig(Config):
+    """The configuration for testing."""
     TESTING = True
     REDIS_DB_INDEX = 15
     WTF_CSRF_ENABLED = False
     SERVER_NAME = 'localhost'
     
 class ProductionConfig(Config):
+    """The production configuration."""
     pass
     
 config_by_name = dict(

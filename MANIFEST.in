@@ -1,2 +1,5 @@
+# Include the license file
+include LICENSE
+# Include the HTML templates and resources
 recursive-include pytwask/templates *
 recursive-include pytwask/static *

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Package pytwask"""
 
 import datetime
 
@@ -21,6 +22,13 @@ toolbar = DebugToolbarExtension()
 moment = Moment()
 
 def create_app(config_name):
+    """Create and initialize the Flask application. 
+    
+    Here we follow the Flask typical pattern of "Application Factories". 
+    For details, please refer to: 
+    
+    http://flask.pocoo.org/docs/0.12/patterns/appfactories/
+    """
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
 

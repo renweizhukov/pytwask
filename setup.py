@@ -19,11 +19,11 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='pytwask',
-    version='0.1.1',
+    version='0.1.2',
     description='A twitter-toy-clone frontend using Python and Flask',
     long_description=long_description,
     # TODO: Replace url by the GitHub Pages.
-    url='https://github.com/renweizhukov/pytwask',
+    url='https://renweizhukov.github.io/pytwask',
     author='Wei Ren',
     author_email='renwei2004@gmail.com',
     classifiers=[
@@ -56,7 +56,7 @@ setup(
     project_urls={
         'Bug Reports': 'https://github.com/renweizhukov/pytwask/issues',
         # TODO: Replace documentation url by the GitHub Pages.
-        'Documentation': 'https://github.com/renweizhukov/pytwask',
+        'Documentation': 'https://renweizhukov.github.io/pytwask',
         'Source': 'https://github.com/renweizhukov/pytwask',
         },
     )
