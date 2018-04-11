@@ -316,6 +316,9 @@ nginx can communicate easily with the Gunicorn process.
     Group=www-data
     WorkingDirectory=/home/flask-apps/.virtualenvs
     Environment="PATH=/home/flask-apps/.virtualenvs/pytwask/bin"
+    Environment="PYTWASK_ENV=prod"
+    Environment="REDIS_DB_SOCKET=/tmp/redis.sock"
+    Environment="REDIS_DB_PASSWORD=[PASSWORD]"
     ExecStart=/home/flask-apps/.virtualenvs/pytwask/bin/gunicorn -b unix:/tmp/pytwask.sock -m 007 -w 4 autopytwask:app
 
     [Install]
