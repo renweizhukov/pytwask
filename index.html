@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pytwask &#8212; pytwask 0.1.4 documentation</title>
+    <title>pytwask &#8212; pytwask 0.1.5 documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="_static/documentation_options.js"></script>
@@ -71,8 +71,14 @@
 <li><a class="reference internal" href="#features">1. Features</a></li>
 <li><a class="reference internal" href="#backend-database">2. Backend database</a></li>
 <li><a class="reference internal" href="#mtv-architecture">3. MTV architecture</a></li>
-<li><a class="reference internal" href="#development">4. Development</a></li>
-<li><a class="reference internal" href="#readme-rst">5. README.rst</a></li>
+<li><a class="reference internal" href="#deployment">4. Deployment</a><ul>
+<li><a class="reference internal" href="#deploy-the-flask-application-in-the-cloud">4.1. Deploy the Flask application in the cloud.</a></li>
+<li><a class="reference internal" href="#deploy-the-flask-application-via-docker">4.2. Deploy the Flask application via docker.</a></li>
+<li><a class="reference internal" href="#troubleshooting">4.3. Troubleshooting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development">5. Development</a></li>
+<li><a class="reference internal" href="#readme-rst">6. README.rst</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
@@ -123,8 +129,14 @@
 <li><a class="reference internal" href="#features">1. Features</a></li>
 <li><a class="reference internal" href="#backend-database">2. Backend database</a></li>
 <li><a class="reference internal" href="#mtv-architecture">3. MTV architecture</a></li>
-<li><a class="reference internal" href="#development">4. Development</a></li>
-<li><a class="reference internal" href="#readme-rst">5. README.rst</a></li>
+<li><a class="reference internal" href="#deployment">4. Deployment</a><ul>
+<li><a class="reference internal" href="#deploy-the-flask-application-in-the-cloud">4.1. Deploy the Flask application in the cloud.</a></li>
+<li><a class="reference internal" href="#deploy-the-flask-application-via-docker">4.2. Deploy the Flask application via docker.</a></li>
+<li><a class="reference internal" href="#troubleshooting">4.3. Troubleshooting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development">5. Development</a></li>
+<li><a class="reference internal" href="#readme-rst">6. README.rst</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
@@ -233,8 +245,259 @@ pattern. Its directory layout follows the ones given at</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="deployment">
+<h2>4. Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="deploy-the-flask-application-in-the-cloud">
+<h3>4.1. Deploy the Flask application in the cloud.<a class="headerlink" href="#deploy-the-flask-application-in-the-cloud" title="Permalink to this headline">¶</a></h3>
+<p>Take the Amazon Web Service (AWS) as an example. Assume that we have
+created an EC2 instance with Ubuntu 16.04LTS, exposed its HTTP port 80,
+and SSH’ed into it.</p>
+<p>4.1.1. Install Python 3.6, pip, pip3, virtualenvwrapper.</p>
+<ol class="arabic simple">
+<li>Install Python 3.6 from source.</li>
+</ol>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># Download the latest source release of Python 3.6.
+$ wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
+
+# Unpack the downloaded archive.
+$ tar -xvf Python-3.6.5.tgz
+
+# Build and install.
+$ cd Python-3.6.5
+$ ./configure
+$ make
+$ make install
+
+# Verify the installation.
+$ python3.6 -V
+Python 3.6.5
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Install pip and pip3.</li>
+</ol>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install python-pip python3-pip
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Install virtualenvwrapper.</li>
+</ol>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip3 install virtualenvwrapper
+</pre></div>
+</div>
+<p>4.1.2. Create a separate user which will run the Flask application.</p>
+<p>We should never run the Flask application as root. If we do that, once
+the Flask application is compromised somehow, the attacker will gain
+access to the entire system.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo adduser flask-apps
+</pre></div>
+</div>
+<p>4.1.3. Create the virtual environment for running the Flask application.</p>
+<ol class="arabic simple">
+<li>Set up <code class="docutils literal notranslate"><span class="pre">virtualenvwrapper</span></code> for the user <code class="docutils literal notranslate"><span class="pre">flask-apps</span></code>.</li>
+</ol>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo su - flask-apps
+$ vi ~/.bashrc
+</pre></div>
+</div>
+<p>Add the following lines in <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=&#39;--no-site-packages&#39;
+source /usr/local/bin/virtualenvwrapper.sh
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Reload <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> and create a virtual environment for running the
+Flask application.</li>
+</ol>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd
+$ source .bashrc
+$ mkvirtualenv -p /usr/bin/python3.6 pytwask
+</pre></div>
+</div>
+<p>Note that the binary location of <code class="docutils literal notranslate"><span class="pre">python3.6</span></code> may vary on different
+machines but it can be easily found by <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">python3.6</span></code>.</p>
+<p>4.1.4. Install the Python WSGI HTTP server <code class="docutils literal notranslate"><span class="pre">Gunicorn</span></code> and the Flask
+application <code class="docutils literal notranslate"><span class="pre">pytwask</span></code> in the above virtual environment <code class="docutils literal notranslate"><span class="pre">flask-apps</span></code>.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># After mkvirtualenv is done, the virtual environment flask-apps should be automatically activated.
+# But if not, we can manually activate it.
+$ workon pytwask
+
+(pytwask) $ pip install gunicorn pytwask
+</pre></div>
+</div>
+<p>4.1.5. Install and configure nginx.</p>
+<ol class="arabic simple">
+<li>Install nginx.</li>
+</ol>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># Exit the user flask-apps
+$ exit
+
+$ sudo apt install nginx
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Configure nginx to proxy requests.</li>
+</ol>
+<ul class="simple">
+<li>Create a configuration file for pytwask.</li>
+</ul>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo vi /etc/nginx/sites-available/pytwask
+</pre></div>
+</div>
+<p>Note that we will pass requests to the socket we defined using the
+<code class="docutils literal notranslate"><span class="pre">proxy_pass</span></code> directive.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="p">{</span>
+    <span class="n">listen</span>      <span class="mi">80</span><span class="p">;</span>
+    <span class="n">server_name</span> <span class="p">[</span><span class="n">SERVER_DNS_NAME</span> <span class="n">OR</span> <span class="n">SERVER_IP</span><span class="p">];</span>
+
+    <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+        <span class="n">include</span> <span class="n">proxy_params</span><span class="p">;</span>
+        <span class="n">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">unix</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">pytwask</span><span class="o">.</span><span class="n">sock</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Enable the above server configuration by linking the file to the
+<code class="docutils literal notranslate"><span class="pre">sites-enabled</span></code> directory.</li>
+</ul>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo ln -s /etc/nginx/sites-available/pytwask /etc/nginx/sites-enabled
+</pre></div>
+</div>
+<ul class="simple">
+<li>Test the configuration file for syntax error.</li>
+</ul>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo nginx -t
+</pre></div>
+</div>
+<ul class="simple">
+<li>Restart nginx to load the new configuration.</li>
+</ul>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo service nginx restart
+</pre></div>
+</div>
+<p>4.1.6. Start a Gunicorn process to serve the Flask application.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo su - flask-apps
+
+# Here we use the UNIX domain socket to connect to the Redis database.
+# If you want to use the TCP/IP connection, then don&#39;t define the environment variable REDIS_DB_SOCKET.
+$ export PYTWASK_ENV=prod
+$ export REDIS_DB_SOCKET=&quot;/tmp/redis.sock&quot;
+$ export REDIS_DB_PASSWORD=&quot;[PASSWORD]&quot;
+
+$ workon pytwask
+(pytwask) $ gunicorn -b unix:/tmp/pytwask.sock -m 007 -w 4 autopytwask:app &amp;
+</pre></div>
+</div>
+<p>Note that the ampersand “&amp;” will set the Gunicorn process off running in
+the background.</p>
+<p>4.1.7. (Optional) Create a systemd unit file and enable the Gunicorn
+process as a service.</p>
+<ol class="arabic simple">
+<li>Create a unit file ending in <code class="docutils literal notranslate"><span class="pre">.service</span></code> within the directory
+<code class="docutils literal notranslate"><span class="pre">/etc/systemd/system</span></code>.</li>
+</ol>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo vi /etc/systemd/system/pytwask.service
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Add the section <code class="docutils literal notranslate"><span class="pre">[Unit]</span></code> to specify metadata and dependencies.</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Gunicorn</span> <span class="n">instance</span> <span class="n">to</span> <span class="n">serve</span> <span class="n">pytwask</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Add the section <code class="docutils literal notranslate"><span class="pre">[Service]</span></code> to specify:</li>
+</ol>
+<ul class="simple">
+<li>the user <code class="docutils literal notranslate"><span class="pre">flask-apps</span></code> and group <code class="docutils literal notranslate"><span class="pre">www-data</span></code> that we want the
+process to run under;</li>
+<li>the working directory and set various environment variables;</li>
+<li>the command to start the service.</li>
+</ul>
+<p>Note that we give the group ownership to group <code class="docutils literal notranslate"><span class="pre">www-data</span></code> so that
+nginx can communicate easily with the Gunicorn process.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Gunicorn</span> <span class="n">instance</span> <span class="n">to</span> <span class="n">serve</span> <span class="n">pytwask</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">User</span><span class="o">=</span><span class="n">flask</span><span class="o">-</span><span class="n">apps</span>
+<span class="n">Group</span><span class="o">=</span><span class="n">www</span><span class="o">-</span><span class="n">data</span>
+<span class="n">WorkingDirectory</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">flask</span><span class="o">-</span><span class="n">apps</span><span class="o">/.</span><span class="n">virtualenvs</span>
+<span class="n">Environment</span><span class="o">=</span><span class="s2">&quot;PATH=/home/flask-apps/.virtualenvs/pytwask/bin&quot;</span>
+<span class="n">Environment</span><span class="o">=</span><span class="s2">&quot;PYTWASK_ENV=prod&quot;</span>
+<span class="n">Environment</span><span class="o">=</span><span class="s2">&quot;REDIS_DB_SOCKET=/tmp/redis.sock&quot;</span>
+<span class="n">Environment</span><span class="o">=</span><span class="s2">&quot;REDIS_DB_PASSWORD=[PASSWORD]&quot;</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">flask</span><span class="o">-</span><span class="n">apps</span><span class="o">/.</span><span class="n">virtualenvs</span><span class="o">/</span><span class="n">pytwask</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">gunicorn</span> <span class="o">-</span><span class="n">b</span> <span class="n">unix</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">pytwask</span><span class="o">.</span><span class="n">sock</span> <span class="o">-</span><span class="n">m</span> <span class="mi">007</span> <span class="o">-</span><span class="n">w</span> <span class="mi">4</span> <span class="n">autopytwask</span><span class="p">:</span><span class="n">app</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>Add the section <code class="docutils literal notranslate"><span class="pre">[Install]</span></code> to tell systemd what to link this
+service to if we enable it to start at boot.</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Gunicorn</span> <span class="n">instance</span> <span class="n">to</span> <span class="n">serve</span> <span class="n">pytwask</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">User</span><span class="o">=</span><span class="n">flask</span><span class="o">-</span><span class="n">apps</span>
+<span class="n">Group</span><span class="o">=</span><span class="n">www</span><span class="o">-</span><span class="n">data</span>
+<span class="n">WorkingDirectory</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">flask</span><span class="o">-</span><span class="n">apps</span><span class="o">/.</span><span class="n">virtualenvs</span>
+<span class="n">Environment</span><span class="o">=</span><span class="s2">&quot;PATH=/home/flask-apps/.virtualenvs/pytwask/bin&quot;</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">flask</span><span class="o">-</span><span class="n">apps</span><span class="o">/.</span><span class="n">virtualenvs</span><span class="o">/</span><span class="n">pytwask</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">gunicorn</span> <span class="o">-</span><span class="n">b</span> <span class="n">unix</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">pytwask</span><span class="o">.</span><span class="n">sock</span> <span class="o">-</span><span class="n">m</span> <span class="mi">007</span> <span class="o">-</span><span class="n">w</span> <span class="mi">4</span> <span class="n">autopytwask</span><span class="p">:</span><span class="n">app</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li>Start the Gunicorn service and enable it to start at boot.</li>
+</ol>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl start pytwask
+$ sudo systemctl enable pytwask
+</pre></div>
+</div>
+</div>
+<div class="section" id="deploy-the-flask-application-via-docker">
+<h3>4.2. Deploy the Flask application via docker.<a class="headerlink" href="#deploy-the-flask-application-via-docker" title="Permalink to this headline">¶</a></h3>
+<p>To be added.</p>
+</div>
+<div class="section" id="troubleshooting">
+<h3>4.3. Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h3>
+<p>4.3.1. <cite>Errors while reloading `</cite>.bashrc`` for
+<code class="docutils literal notranslate"><span class="pre">virtualenvwrapper</span></code> &lt;<a class="reference external" href="https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader">https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader</a>&gt;`__.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/usr/bin/python3: Error while finding spec for &#39;virtualenvwrapper.hook_loader&#39; (&lt;class &#39;ImportError&#39;&gt;: No module named &#39;virtualenvwrapper&#39;)
+</pre></div>
+</div>
+<p>To fix this, install <code class="docutils literal notranslate"><span class="pre">python3-pip</span></code> and then install
+<code class="docutils literal notranslate"><span class="pre">virtualenvwrapper</span></code> from <code class="docutils literal notranslate"><span class="pre">pip3</span></code>.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install python3-pip
+$ sudo pip3 install virtualwrapperenv
+</pre></div>
+</div>
+<p>4.3.2. <a class="reference external" href="https://askubuntu.com/questions/764222/nginx-installation-error-in-ubuntu-16-04">Errors while installing
+nginx</a>.</p>
+<p>To fix this, stop apache2 before installing nginx.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo service apache2 stop
+</pre></div>
+</div>
+<p>As a further step, we may disable apache2 from startup or even remove
+apache2.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># To disable apache2
+$ sudo update-rc.d apache2 disable
+
+# To remove apache2
+$ sudo update-rc.d -f apache2 remove
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="development">
-<h2>4. Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<h2>5. Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
 <p>By default, this Flask application will run in the development mode
 where the Flask DebugToolbar is enabled.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/renweizhukov/pytwask.git
@@ -246,7 +509,7 @@ $ flask run
 </div>
 </div>
 <div class="section" id="readme-rst">
-<h2>5. README.rst<a class="headerlink" href="#readme-rst" title="Permalink to this headline">¶</a></h2>
+<h2>6. README.rst<a class="headerlink" href="#readme-rst" title="Permalink to this headline">¶</a></h2>
 <p>README.rst is generated from README.md via <code class="docutils literal notranslate"><span class="pre">pandoc</span></code>.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ pandoc --from=markdown --to=rst --output=README.rst README.md
 </pre></div>
