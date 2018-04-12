@@ -200,6 +200,30 @@ application ``pytwask`` in the above virtual environment ``flask-apps``.
 
 (2) Configure nginx to proxy requests.
 
+-  Optimize the nginx parameter ``default_type`` for the Flask
+   application.
+
+According to
+http://www.patricksoftwareblog.com/how-to-configure-nginx-for-a-flask-web-application/,
+for a Flask application that is generating dynamic HTML files, the
+parameter ``default_type`` should be changed to:
+``default_type text/html;``.
+
+.. code:: bash
+
+    $ sudo vi /etc/nginx/nginx.conf 
+
+::
+
+    http {
+        ......
+
+        include /etc/nginx/mime.types;
+        default_type text/html; # was application/octet-stream
+
+        ......
+    }
+
 -  Create a configuration file for pytwask.
 
 .. code:: bash
