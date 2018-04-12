@@ -340,6 +340,28 @@ $ sudo apt install nginx
 <li>Configure nginx to proxy requests.</li>
 </ol>
 <ul class="simple">
+<li>Optimize the nginx parameter <code class="docutils literal notranslate"><span class="pre">default_type</span></code> for the Flask
+application.</li>
+</ul>
+<p>According to
+<a class="reference external" href="http://www.patricksoftwareblog.com/how-to-configure-nginx-for-a-flask-web-application/">http://www.patricksoftwareblog.com/how-to-configure-nginx-for-a-flask-web-application/</a>,
+for a Flask application that is generating dynamic HTML files, the
+parameter <code class="docutils literal notranslate"><span class="pre">default_type</span></code> should be changed to:
+<code class="docutils literal notranslate"><span class="pre">default_type</span> <span class="pre">text/html;</span></code>.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo vi /etc/nginx/nginx.conf
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span> <span class="p">{</span>
+    <span class="o">......</span>
+
+    <span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">mime</span><span class="o">.</span><span class="n">types</span><span class="p">;</span>
+    <span class="n">default_type</span> <span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">;</span> <span class="c1"># was application/octet-stream</span>
+
+    <span class="o">......</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
 <li>Create a configuration file for pytwask.</li>
 </ul>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo vi /etc/nginx/sites-available/pytwask
