@@ -31,10 +31,10 @@ class SignUpForm(FlaskForm):
 class ChangePasswordForm(FlaskForm):
     """The form for changing the user password."""
     old_password = PasswordField('Old password', validators=[DataRequired()])
-    new_password = PasswordField('New password', 
+    new_password = PasswordField('New password',
                                  validators=[
                                      DataRequired(),
-                                     EqualTo('new_password2', 
+                                     EqualTo('new_password2',
                                              message='New passwords must match')])
     new_password2 = PasswordField('Confirm new password', validators=[DataRequired()])
     submit = SubmitField('Submit')

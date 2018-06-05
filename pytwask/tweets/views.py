@@ -17,8 +17,8 @@ def general_timeline():
 
 @tweets.route('/user_timeline', methods=['GET', 'POST'])
 @login_required
-def user_timeline(username=None):
-    """This view renders the user timeline. 
+def user_timeline(username=None):  # pylint: disable=unused-argument
+    """This view renders the user timeline.
     It also allows the user to post tweets.
     """
     form = PostTweetForm()
@@ -26,31 +26,31 @@ def user_timeline(username=None):
         try:
             current_user.post_tweet(form.tweet.data)
             flash('Tweet successfully posted')
-        except ValueError as e:
-            flash(str(e))
-            return render_template('timeline.html', 
-                                   general=False, 
-                                   show_username=True, 
+        except ValueError as excep:
+            flash(str(excep))
+            return render_template('timeline.html',
+                                   general=False,
+                                   show_username=True,
                                    form=form)
-    
-    return render_template('timeline.html', 
-                           general=False, 
+
+    return render_template('timeline.html',
+                           general=False,
                            show_username=True,
                            form=form)
 
 
 @tweets.route('/user_history/<username>')
 def user_history(username):
-    """This view renders the user history. It will 
-    
+    """This view renders the user history. It will
+
     - display all the tweets posted by this user;
     - allow the logged-in user to follow/unfollow this user if they are different.
     """
     follow_form = FollowForm()
     unfollow_form = UnfollowForm()
-    return render_template('user_history.html', 
+    return render_template('user_history.html',
                            username=username,
-                           follow_form=follow_form, 
+                           follow_form=follow_form,
                            unfollow_form=unfollow_form)
 
 
@@ -59,18 +59,18 @@ def follow(username):
     """This view handles the follow form in the user history page."""
     follow_form = FollowForm()
     unfollow_form = UnfollowForm()
-    
+
     if follow_form.validate_on_submit():
         try:
             current_user.follow(username)
             flash('Followed {}'.format(username))
-        except ValueError as e:
-            flash(str(e))
+        except ValueError as excep:
+            flash(str(excep))
             return render_template('user_history.html',
                                    username=username,
                                    follow_form=follow_form,
                                    unfollow_form=unfollow_form)
-    
+
     return render_template('user_history.html',
                            username=username,
                            follow_form=follow_form,
@@ -82,18 +82,18 @@ def unfollow(username):
     """This view handles the unfollow form in the user history page."""
     follow_form = FollowForm()
     unfollow_form = UnfollowForm()
-    
+
     if unfollow_form.validate_on_submit():
         try:
             current_user.unfollow(username)
             flash('Unfollowed {}'.format(username))
-        except ValueError as e:
-            flash(str(e))
+        except ValueError as excep:
+            flash(str(excep))
             return render_template('user_history.html',
                                    username=username,
                                    follow_form=follow_form,
                                    unfollow_form=unfollow_form)
-    
+
     return render_template('user_history.html',
                            username=username,
                            follow_form=follow_form,
@@ -102,8 +102,8 @@ def unfollow(username):
 
 @tweets.app_context_processor
 def inject_general_timeline():
-    """This function injects the function object 'Tweet.get_general_timeline' 
-    into the application context so that 'get_general_timeline' can be accessed 
+    """This function injects the function object 'Tweet.get_general_timeline'
+    into the application context so that 'get_general_timeline' can be accessed
     in Jinja2 templates.
     """
     return dict(get_general_timeline=Tweet.get_general_timeline)

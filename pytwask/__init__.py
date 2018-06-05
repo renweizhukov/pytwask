@@ -11,22 +11,22 @@ from flask_debugtoolbar import DebugToolbarExtension
 from .config import config_by_name
 
 # Configure authentication
-login_manager = LoginManager()
+login_manager = LoginManager()  # pylint: disable=invalid-name
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.index'
 
 # Enable debugtoolbar
-toolbar = DebugToolbarExtension()
+toolbar = DebugToolbarExtension()  # pylint: disable=invalid-name
 
 # For displaying timestamps
-moment = Moment()
+moment = Moment()  # pylint: disable=invalid-name
 
 def create_app(config_name):
-    """Create and initialize the Flask application. 
-    
-    Here we follow the Flask typical pattern of "Application Factories". 
-    For details, please refer to: 
-    
+    """Create and initialize the Flask application.
+
+    Here we follow the Flask typical pattern of "Application Factories".
+    For details, please refer to:
+
     http://flask.pocoo.org/docs/0.12/patterns/appfactories/
     """
     app = Flask(__name__)
@@ -38,11 +38,11 @@ def create_app(config_name):
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint, url_prefix='/')
-    
+
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
-    
+
     from .tweets import tweets as tweets_blueprint
     app.register_blueprint(tweets_blueprint, url_prefix='/tweets')
-    
+
     return app

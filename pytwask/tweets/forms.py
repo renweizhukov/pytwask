@@ -12,11 +12,11 @@ from wtforms.validators import DataRequired
 
 class PostTweetForm(FlaskForm):
     """The form for posting a tweet."""
-    tweet = TextAreaField('', 
-                          render_kw={"rows": 10, "cols": 30}, 
+    tweet = TextAreaField('',
+                          render_kw={"rows": 10, "cols": 30},
                           validators=[DataRequired()])
     submit = SubmitField('Post')
-    
+
 class FollowForm(FlaskForm):
     """The form for following a user."""
     submit = SubmitField('Follow')

@@ -3,6 +3,6 @@
 
 from flask import Blueprint
 
-tweets = Blueprint('tweets', __name__)
+tweets = Blueprint('tweets', __name__)  # pylint: disable=invalid-name
 
-from . import views
+from . import views  # pylint: disable=wrong-import-position

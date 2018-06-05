@@ -412,7 +412,19 @@ where the Flask DebugToolbar is enabled.
     $ export FLASK_APP=autopytwask
     $ flask run
 
-6. README.rst
+6. PEP8
+-------
+
+We use ``pylint`` to enforce the Python Style Guide PEP8.
+
+.. code:: bash
+
+    $ pylint pytwask
+
+We have fixed all the convention violations, warnings, and errors in the
+package ``pytwask``.
+
+7. README.rst
 -------------
 
 README.rst is generated from README.md via ``pandoc``.

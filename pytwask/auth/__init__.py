@@ -3,6 +3,6 @@
 
 from flask import Blueprint
 
-auth = Blueprint('auth', __name__)
+auth = Blueprint('auth', __name__)  # pylint: disable=invalid-name
 
-from . import views
+from . import views  # pylint: disable=wrong-import-position
