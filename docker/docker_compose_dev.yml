@@ -1,0 +1,28 @@
+version: '3'
+ 
+services:
+  pytwask:
+    restart: always
+    build:
+      context: ../
+      dockerfile: Dockerfile_dev
+    ports:
+      - "5000:5000"
+    environment:
+      - REDIS_DB_HOSTNAME=redis
+      - FLASK_APP=autopytwask
+    command: flask run -h 0.0.0.0
+    depends_on:
+      - redis
+  
+  redis:
+    restart: always
+    image: 'redis:4.0.9'
+    command: redis-server
+    volumes:
+      - 'redis:/data'
+    expose:
+      - "6379"
+      
+volumes:
+  redis:

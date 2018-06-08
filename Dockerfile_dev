@@ -1,0 +1,7 @@
+FROM python:3.6-jessie
+
+RUN mkdir -p /usr/src/app/pytwask
+WORKDIR /usr/src/app/pytwask
+
+COPY ./pytwask/ autopytwask.py MANIFEST.in README.rst requirements.txt setup.py /usr/src/app/pytwask/
+RUN pip install -e .
