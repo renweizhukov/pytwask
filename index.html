@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pytwask &#8212; pytwask 0.1.6 documentation</title>
+    <title>pytwask &#8212; pytwask 0.2.0 documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="_static/documentation_options.js"></script>
@@ -67,20 +67,39 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">pytwask</a><ul>
+<li><a class="reference internal" href="#">pytwask</a></li>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li><a class="reference internal" href="#features">1. Features</a></li>
 <li><a class="reference internal" href="#backend-database">2. Backend database</a></li>
 <li><a class="reference internal" href="#mtv-architecture">3. MTV architecture</a></li>
 <li><a class="reference internal" href="#deployment">4. Deployment</a><ul>
-<li><a class="reference internal" href="#deploy-the-flask-application-in-the-cloud">4.1. Deploy the Flask application in the cloud.</a></li>
-<li><a class="reference internal" href="#deploy-the-flask-application-via-docker">4.2. Deploy the Flask application via docker.</a></li>
-<li><a class="reference internal" href="#troubleshooting">4.3. Troubleshooting</a></li>
+<li><a class="reference internal" href="#deploy-the-flask-application-in-the-cloud">4.1. Deploy the Flask application in the cloud.</a><ul>
+<li><a class="reference internal" href="#install-python-3-6-pip-pip3-virtualenvwrapper">4.1.1. Install Python 3.6, pip, pip3, virtualenvwrapper.</a></li>
+<li><a class="reference internal" href="#create-a-separate-user-which-will-run-the-flask-application">4.1.2. Create a separate user which will run the Flask application.</a></li>
+<li><a class="reference internal" href="#create-the-virtual-environment-for-running-the-flask-application">4.1.3. Create the virtual environment for running the Flask application.</a></li>
+<li><a class="reference internal" href="#install-the-python-wsgi-http-server-gunicorn-and-the-flask-application-pytwask-in-the-above-virtual-environment-flask-apps">4.1.4. Install the Python WSGI HTTP server <code class="docutils literal notranslate"><span class="pre">Gunicorn</span></code> and the Flask application <code class="docutils literal notranslate"><span class="pre">pytwask</span></code> in the above virtual environment <code class="docutils literal notranslate"><span class="pre">flask-apps</span></code>.</a></li>
+<li><a class="reference internal" href="#install-and-configure-nginx">4.1.5. Install and configure nginx.</a></li>
+<li><a class="reference internal" href="#start-a-gunicorn-process-to-serve-the-flask-application">4.1.6. Start a Gunicorn process to serve the Flask application.</a></li>
+<li><a class="reference internal" href="#optional-create-a-systemd-unit-file-and-enable-the-gunicorn-process-as-a-service">4.1.7. (Optional) Create a systemd unit file and enable the Gunicorn process as a service.</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deploy-the-flask-application-via-docker">4.2. Deploy the Flask application via docker.</a><ul>
+<li><a class="reference internal" href="#install-docker-and-docker-compose">4.2.1 Install docker and docker-compose.</a></li>
+<li><a class="reference internal" href="#download-the-docker-compose-yml-file">4.2.2 Download the docker-compose yml file.</a></li>
+<li><a class="reference internal" href="#build-services">4.2.3 Build services.</a></li>
+<li><a class="reference internal" href="#create-and-start-containers">4.2.4 Create and start containers.</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">4.3. Troubleshooting</a><ul>
+<li><a class="reference internal" href="#errors-while-reloading-bashrc-for-virtualenvwrapper-https-stackoverflow-com-questions-33216679-usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader">4.3.1. <cite>Errors while reloading `</cite>.bashrc`` for <code class="docutils literal notranslate"><span class="pre">virtualenvwrapper</span></code> &lt;https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader&gt;`__.</a></li>
+<li><a class="reference internal" href="#errors-while-installing-nginx">4.3.2. Errors while installing nginx.</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#development">5. Development</a></li>
-<li><a class="reference internal" href="#readme-rst">6. README.rst</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#pep8">6. PEP8</a></li>
+<li><a class="reference internal" href="#readme-rst">7. README.rst</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </ul>
@@ -125,20 +144,39 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">pytwask</a><ul>
+<li><a class="reference internal" href="#">pytwask</a></li>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li><a class="reference internal" href="#features">1. Features</a></li>
 <li><a class="reference internal" href="#backend-database">2. Backend database</a></li>
 <li><a class="reference internal" href="#mtv-architecture">3. MTV architecture</a></li>
 <li><a class="reference internal" href="#deployment">4. Deployment</a><ul>
-<li><a class="reference internal" href="#deploy-the-flask-application-in-the-cloud">4.1. Deploy the Flask application in the cloud.</a></li>
-<li><a class="reference internal" href="#deploy-the-flask-application-via-docker">4.2. Deploy the Flask application via docker.</a></li>
-<li><a class="reference internal" href="#troubleshooting">4.3. Troubleshooting</a></li>
+<li><a class="reference internal" href="#deploy-the-flask-application-in-the-cloud">4.1. Deploy the Flask application in the cloud.</a><ul>
+<li><a class="reference internal" href="#install-python-3-6-pip-pip3-virtualenvwrapper">4.1.1. Install Python 3.6, pip, pip3, virtualenvwrapper.</a></li>
+<li><a class="reference internal" href="#create-a-separate-user-which-will-run-the-flask-application">4.1.2. Create a separate user which will run the Flask application.</a></li>
+<li><a class="reference internal" href="#create-the-virtual-environment-for-running-the-flask-application">4.1.3. Create the virtual environment for running the Flask application.</a></li>
+<li><a class="reference internal" href="#install-the-python-wsgi-http-server-gunicorn-and-the-flask-application-pytwask-in-the-above-virtual-environment-flask-apps">4.1.4. Install the Python WSGI HTTP server <code class="docutils literal notranslate"><span class="pre">Gunicorn</span></code> and the Flask application <code class="docutils literal notranslate"><span class="pre">pytwask</span></code> in the above virtual environment <code class="docutils literal notranslate"><span class="pre">flask-apps</span></code>.</a></li>
+<li><a class="reference internal" href="#install-and-configure-nginx">4.1.5. Install and configure nginx.</a></li>
+<li><a class="reference internal" href="#start-a-gunicorn-process-to-serve-the-flask-application">4.1.6. Start a Gunicorn process to serve the Flask application.</a></li>
+<li><a class="reference internal" href="#optional-create-a-systemd-unit-file-and-enable-the-gunicorn-process-as-a-service">4.1.7. (Optional) Create a systemd unit file and enable the Gunicorn process as a service.</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deploy-the-flask-application-via-docker">4.2. Deploy the Flask application via docker.</a><ul>
+<li><a class="reference internal" href="#install-docker-and-docker-compose">4.2.1 Install docker and docker-compose.</a></li>
+<li><a class="reference internal" href="#download-the-docker-compose-yml-file">4.2.2 Download the docker-compose yml file.</a></li>
+<li><a class="reference internal" href="#build-services">4.2.3 Build services.</a></li>
+<li><a class="reference internal" href="#create-and-start-containers">4.2.4 Create and start containers.</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">4.3. Troubleshooting</a><ul>
+<li><a class="reference internal" href="#errors-while-reloading-bashrc-for-virtualenvwrapper-https-stackoverflow-com-questions-33216679-usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader">4.3.1. <cite>Errors while reloading `</cite>.bashrc`` for <code class="docutils literal notranslate"><span class="pre">virtualenvwrapper</span></code> &lt;https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader&gt;`__.</a></li>
+<li><a class="reference internal" href="#errors-while-installing-nginx">4.3.2. Errors while installing nginx.</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#development">5. Development</a></li>
-<li><a class="reference internal" href="#readme-rst">6. README.rst</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#pep8">6. PEP8</a></li>
+<li><a class="reference internal" href="#readme-rst">7. README.rst</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
@@ -164,15 +202,72 @@
   <div class="section" id="pytwask">
 <h1>pytwask<a class="headerlink" href="#pytwask" title="Permalink to this headline">¶</a></h1>
 <p>A toy-twitter-clone frontend using Python and Flask.</p>
-<p>To run this Flask application,</p>
+<p>To run this Flask application locally in the production mode,</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install pytwask
 $ export FLASK_APP=autopytwask
 $ export PYTWASK_ENV=prod
 $ flask run
 </pre></div>
 </div>
+<p>For how to run the application in the development mode, please refer to
+<a class="reference external" href="#5-development">Section 5</a>.</p>
+<p>For how to deploy the application via docker, please refer to <a class="reference external" href="#42-deploy-the-flask-application-via-docker">Section
+4.2</a>.</p>
+</div>
+<div class="section" id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference external" href="#1-features">1. Features</a></li>
+<li><a class="reference external" href="#2-backend-database">2. Backend database</a></li>
+<li><a class="reference external" href="#3-mtv-architecture">3. MTV architecture</a></li>
+<li><a class="reference external" href="#4-deployment">4. Deployment</a><ul>
+<li><a class="reference external" href="#41-deploy-the-flask-application-in-the-cloud">4.1. Deploy the Flask application in the
+cloud.</a><ul>
+<li><a class="reference external" href="#411-install-python-36-pip-pip3-virtualenvwrapper">4.1.1. Install Python 3.6, pip, pip3,
+virtualenvwrapper.</a></li>
+<li><a class="reference external" href="#412-create-a-separate-user-which-will-run-the-flask-application">4.1.2. Create a separate user which will run the Flask
+application.</a></li>
+<li><a class="reference external" href="#413-create-the-virtual-environment-for-running-the-flask-application">4.1.3. Create the virtual environment for running the Flask
+application.</a></li>
+<li><a class="reference external" href="#414-install-the-python-wsgi-http-server-gunicorn-and-the-flask-application-pytwask-in-the-above-virtual-environment-flask-apps">4.1.4. Install the Python WSGI HTTP server Gunicorn and the
+Flask application pytwask in the above virtual environment
+flask-apps.</a></li>
+<li><a class="reference external" href="#415-install-and-configure-nginx">4.1.5. Install and configure
+nginx.</a></li>
+<li><a class="reference external" href="#416-start-a-gunicorn-process-to-serve-the-flask-application">4.1.6. Start a Gunicorn process to serve the Flask
+application.</a></li>
+<li><a class="reference external" href="#417-optional-create-a-systemd-unit-file-and-enable-the-gunicorn-process-as-a-service">4.1.7. (Optional) Create a systemd unit file and enable the
+Gunicorn process as a
+service.</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#42-deploy-the-flask-application-via-docker">4.2. Deploy the Flask application via
+docker.</a><ul>
+<li><a class="reference external" href="#421-install-docker-and-docker-compose">4.2.1 Install docker and
+docker-compose.</a></li>
+<li><a class="reference external" href="#422-download-the-docker-compose-yml-file">4.2.2 Download the docker-compose yml
+file.</a></li>
+<li><a class="reference external" href="#423-build-services">4.2.3 Build services.</a></li>
+<li><a class="reference external" href="#424-create-and-start-containers">4.2.4 Create and start
+containers.</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#43-troubleshooting">4.3. Troubleshooting</a><ul>
+<li><a class="reference external" href="#431-errors-while-reloading-bashrc-for-virtualenvwrapper">4.3.1. Errors while reloading .bashrc for
+virtualenvwrapper.</a></li>
+<li><a class="reference external" href="#432-errors-while-installing-nginx">4.3.2. Errors while installing
+nginx.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference external" href="#5-development">5. Development</a></li>
+<li><a class="reference external" href="#6-pep8">6. PEP8</a></li>
+<li><a class="reference external" href="#7-readmerst">7. README.rst</a></li>
+</ul>
+</div>
 <div class="section" id="features">
-<h2>1. Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<h1>1. Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h1>
 <p>This module implements the frontend for a simplified Twitter clone based
 on Flask.</p>
 <p>It supports the following features:</p>
@@ -202,7 +297,7 @@ on Flask.</p>
 </ul>
 </div>
 <div class="section" id="backend-database">
-<h2>2. Backend database<a class="headerlink" href="#backend-database" title="Permalink to this headline">¶</a></h2>
+<h1>2. Backend database<a class="headerlink" href="#backend-database" title="Permalink to this headline">¶</a></h1>
 <p>Although currently we only have Redis as the only type of backend
 database, we can easily switch to another type of backend database as
 long as the backend module conforms to the same interface as the Redis
@@ -222,7 +317,7 @@ need to manually enable it in the Redis configuration file (usually
 <code class="docutils literal notranslate"><span class="pre">/etc/redis/redis.conf</span></code>) before use it.</p>
 </div>
 <div class="section" id="mtv-architecture">
-<h2>3. MTV architecture<a class="headerlink" href="#mtv-architecture" title="Permalink to this headline">¶</a></h2>
+<h1>3. MTV architecture<a class="headerlink" href="#mtv-architecture" title="Permalink to this headline">¶</a></h1>
 <p>This Flask application follows the typical Flask Model-Template-View
 pattern. Its directory layout follows the ones given at</p>
 <ul class="simple">
@@ -246,13 +341,14 @@ pattern. Its directory layout follows the ones given at</p>
 </div>
 </div>
 <div class="section" id="deployment">
-<h2>4. Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h2>
+<h1>4. Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="deploy-the-flask-application-in-the-cloud">
-<h3>4.1. Deploy the Flask application in the cloud.<a class="headerlink" href="#deploy-the-flask-application-in-the-cloud" title="Permalink to this headline">¶</a></h3>
+<h2>4.1. Deploy the Flask application in the cloud.<a class="headerlink" href="#deploy-the-flask-application-in-the-cloud" title="Permalink to this headline">¶</a></h2>
 <p>Take the Amazon Web Service (AWS) as an example. Assume that we have
 created an EC2 instance with Ubuntu 16.04LTS, exposed its HTTP port 80,
 and SSH’ed into it.</p>
-<p>4.1.1. Install Python 3.6, pip, pip3, virtualenvwrapper.</p>
+<div class="section" id="install-python-3-6-pip-pip3-virtualenvwrapper">
+<h3>4.1.1. Install Python 3.6, pip, pip3, virtualenvwrapper.<a class="headerlink" href="#install-python-3-6-pip-pip3-virtualenvwrapper" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Install Python 3.6 from source.</li>
 </ol>
@@ -285,14 +381,18 @@ Python 3.6.5
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip3 install virtualenvwrapper
 </pre></div>
 </div>
-<p>4.1.2. Create a separate user which will run the Flask application.</p>
+</div>
+<div class="section" id="create-a-separate-user-which-will-run-the-flask-application">
+<h3>4.1.2. Create a separate user which will run the Flask application.<a class="headerlink" href="#create-a-separate-user-which-will-run-the-flask-application" title="Permalink to this headline">¶</a></h3>
 <p>We should never run the Flask application as root. If we do that, once
 the Flask application is compromised somehow, the attacker will gain
 access to the entire system.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo adduser flask-apps
 </pre></div>
 </div>
-<p>4.1.3. Create the virtual environment for running the Flask application.</p>
+</div>
+<div class="section" id="create-the-virtual-environment-for-running-the-flask-application">
+<h3>4.1.3. Create the virtual environment for running the Flask application.<a class="headerlink" href="#create-the-virtual-environment-for-running-the-flask-application" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Set up <code class="docutils literal notranslate"><span class="pre">virtualenvwrapper</span></code> for the user <code class="docutils literal notranslate"><span class="pre">flask-apps</span></code>.</li>
 </ol>
@@ -317,8 +417,9 @@ $ mkvirtualenv -p /usr/bin/python3.6 pytwask
 </div>
 <p>Note that the binary location of <code class="docutils literal notranslate"><span class="pre">python3.6</span></code> may vary on different
 machines but it can be easily found by <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">python3.6</span></code>.</p>
-<p>4.1.4. Install the Python WSGI HTTP server <code class="docutils literal notranslate"><span class="pre">Gunicorn</span></code> and the Flask
-application <code class="docutils literal notranslate"><span class="pre">pytwask</span></code> in the above virtual environment <code class="docutils literal notranslate"><span class="pre">flask-apps</span></code>.</p>
+</div>
+<div class="section" id="install-the-python-wsgi-http-server-gunicorn-and-the-flask-application-pytwask-in-the-above-virtual-environment-flask-apps">
+<h3>4.1.4. Install the Python WSGI HTTP server <code class="docutils literal notranslate"><span class="pre">Gunicorn</span></code> and the Flask application <code class="docutils literal notranslate"><span class="pre">pytwask</span></code> in the above virtual environment <code class="docutils literal notranslate"><span class="pre">flask-apps</span></code>.<a class="headerlink" href="#install-the-python-wsgi-http-server-gunicorn-and-the-flask-application-pytwask-in-the-above-virtual-environment-flask-apps" title="Permalink to this headline">¶</a></h3>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># After mkvirtualenv is done, the virtual environment flask-apps should be automatically activated.
 # But if not, we can manually activate it.
 $ workon pytwask
@@ -326,7 +427,9 @@ $ workon pytwask
 (pytwask) $ pip install gunicorn pytwask
 </pre></div>
 </div>
-<p>4.1.5. Install and configure nginx.</p>
+</div>
+<div class="section" id="install-and-configure-nginx">
+<h3>4.1.5. Install and configure nginx.<a class="headerlink" href="#install-and-configure-nginx" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Install nginx.</li>
 </ol>
@@ -399,7 +502,9 @@ parameter <code class="docutils literal notranslate"><span class="pre">default_t
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo service nginx restart
 </pre></div>
 </div>
-<p>4.1.6. Start a Gunicorn process to serve the Flask application.</p>
+</div>
+<div class="section" id="start-a-gunicorn-process-to-serve-the-flask-application">
+<h3>4.1.6. Start a Gunicorn process to serve the Flask application.<a class="headerlink" href="#start-a-gunicorn-process-to-serve-the-flask-application" title="Permalink to this headline">¶</a></h3>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo su - flask-apps
 
 # Here we use the UNIX domain socket to connect to the Redis database.
@@ -414,8 +519,9 @@ $ workon pytwask
 </div>
 <p>Note that the ampersand “&amp;” will set the Gunicorn process off running in
 the background.</p>
-<p>4.1.7. (Optional) Create a systemd unit file and enable the Gunicorn
-process as a service.</p>
+</div>
+<div class="section" id="optional-create-a-systemd-unit-file-and-enable-the-gunicorn-process-as-a-service">
+<h3>4.1.7. (Optional) Create a systemd unit file and enable the Gunicorn process as a service.<a class="headerlink" href="#optional-create-a-systemd-unit-file-and-enable-the-gunicorn-process-as-a-service" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Create a unit file ending in <code class="docutils literal notranslate"><span class="pre">.service</span></code> within the directory
 <code class="docutils literal notranslate"><span class="pre">/etc/systemd/system</span></code>.</li>
@@ -487,14 +593,45 @@ $ sudo systemctl enable pytwask
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="deploy-the-flask-application-via-docker">
-<h3>4.2. Deploy the Flask application via docker.<a class="headerlink" href="#deploy-the-flask-application-via-docker" title="Permalink to this headline">¶</a></h3>
-<p>To be added.</p>
+<h2>4.2. Deploy the Flask application via docker.<a class="headerlink" href="#deploy-the-flask-application-via-docker" title="Permalink to this headline">¶</a></h2>
+<p>Via docker, this flask application can be deployed not only on Linux but
+also on Windows, but note that <strong>when it is deployed on Docker for
+Windows, we need to switch to Linux containers</strong>.</p>
+<div class="section" id="install-docker-and-docker-compose">
+<h3>4.2.1 Install docker and docker-compose.<a class="headerlink" href="#install-docker-and-docker-compose" title="Permalink to this headline">¶</a></h3>
+<p>For docker, see <a class="reference external" href="https://docs.docker.com/install/">https://docs.docker.com/install/</a>.</p>
+<p>For docker-compose, see
+<a class="reference external" href="https://docs.docker.com/compose/install/#install-compose">https://docs.docker.com/compose/install/#install-compose</a>.</p>
+</div>
+<div class="section" id="download-the-docker-compose-yml-file">
+<h3>4.2.2 Download the docker-compose yml file.<a class="headerlink" href="#download-the-docker-compose-yml-file" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ wget https://github.com/renweizhukov/pytwask/blob/master/docker/docker-compose.yml
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-services">
+<h3>4.2.3 Build services.<a class="headerlink" href="#build-services" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker-compose build
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-and-start-containers">
+<h3>4.2.4 Create and start containers.<a class="headerlink" href="#create-and-start-containers" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker-compose up -d
+</pre></div>
+</div>
+<p>To stop and remove containers, networks, images, and volumes,</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker-compose down -v
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="troubleshooting">
-<h3>4.3. Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h3>
-<p>4.3.1. <cite>Errors while reloading `</cite>.bashrc`` for
-<code class="docutils literal notranslate"><span class="pre">virtualenvwrapper</span></code> &lt;<a class="reference external" href="https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader">https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader</a>&gt;`__.</p>
+<h2>4.3. Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="errors-while-reloading-bashrc-for-virtualenvwrapper-https-stackoverflow-com-questions-33216679-usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader">
+<h3>4.3.1. <cite>Errors while reloading `</cite>.bashrc`` for <code class="docutils literal notranslate"><span class="pre">virtualenvwrapper</span></code> &lt;<a class="reference external" href="https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader">https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader</a>&gt;`__.<a class="headerlink" href="#errors-while-reloading-bashrc-for-virtualenvwrapper-https-stackoverflow-com-questions-33216679-usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/usr/bin/python3: Error while finding spec for &#39;virtualenvwrapper.hook_loader&#39; (&lt;class &#39;ImportError&#39;&gt;: No module named &#39;virtualenvwrapper&#39;)
 </pre></div>
 </div>
@@ -504,8 +641,9 @@ $ sudo systemctl enable pytwask
 $ sudo pip3 install virtualwrapperenv
 </pre></div>
 </div>
-<p>4.3.2. <a class="reference external" href="https://askubuntu.com/questions/764222/nginx-installation-error-in-ubuntu-16-04">Errors while installing
-nginx</a>.</p>
+</div>
+<div class="section" id="errors-while-installing-nginx">
+<h3>4.3.2. <a class="reference external" href="https://askubuntu.com/questions/764222/nginx-installation-error-in-ubuntu-16-04">Errors while installing nginx</a>.<a class="headerlink" href="#errors-while-installing-nginx" title="Permalink to this headline">¶</a></h3>
 <p>To fix this, stop apache2 before installing nginx.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo service apache2 stop
 </pre></div>
@@ -521,8 +659,9 @@ $ sudo update-rc.d -f apache2 remove
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="development">
-<h2>5. Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<h1>5. Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h1>
 <p>By default, this Flask application will run in the development mode
 where the Flask DebugToolbar is enabled.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/renweizhukov/pytwask.git
@@ -532,9 +671,36 @@ $ export FLASK_APP=autopytwask
 $ flask run
 </pre></div>
 </div>
+<p>To launch the application in the development mode via docker, first
+install docker and docker-compose by following steps given in <a class="reference external" href="#42-deploy-the-flask-application-via-docker">Section
+4.2</a>, and then build
+services, create and start containers.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/renweizhukov/pytwask.git
+$ cd docker
+
+# Build services.
+$ docker-compose -f docker-compose_dev.yml build
+
+# Create and start containers in the detach mode.
+$ docker-compose -f docker-compose_dev.yml up -d
+</pre></div>
+</div>
+<p>To stop and remove containers, networks, images, and volumes,</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker-compose -f docker-compose_dev.yml down -v
+</pre></div>
+</div>
+</div>
+<div class="section" id="pep8">
+<h1>6. PEP8<a class="headerlink" href="#pep8" title="Permalink to this headline">¶</a></h1>
+<p>We use <code class="docutils literal notranslate"><span class="pre">pylint</span></code> to enforce the Python Style Guide PEP8.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ pylint pytwask
+</pre></div>
+</div>
+<p>We have fixed all the convention violations, warnings, and errors in the
+package <code class="docutils literal notranslate"><span class="pre">pytwask</span></code>.</p>
 </div>
 <div class="section" id="readme-rst">
-<h2>6. README.rst<a class="headerlink" href="#readme-rst" title="Permalink to this headline">¶</a></h2>
+<h1>7. README.rst<a class="headerlink" href="#readme-rst" title="Permalink to this headline">¶</a></h1>
 <p>README.rst is generated from README.md via <code class="docutils literal notranslate"><span class="pre">pandoc</span></code>.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ pandoc --from=markdown --to=rst --output=README.rst README.md
 </pre></div>
@@ -547,7 +713,6 @@ $ flask run
 </ul>
 </li>
 </ul>
-</div>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
