@@ -1,9 +1,0 @@
-server {
-    listen      80;
-    server_name ${SERVER_NAME};
-
-    location / {
-        include proxy_params;
-        proxy_pass http://unix:/tmp/docker/pytwask.sock;
-    }
-}

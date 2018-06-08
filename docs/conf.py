@@ -30,7 +30,7 @@ author = 'Wei Ren'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.1.6'
+release = '0.2.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -165,6 +165,6 @@ texinfo_documents = [
 
 # -- Extension configuration -------------------------------------------------
 
-# Prevent the autodoc extension from importing pytwis when Sphinx 
+# Prevent the autodoc extension from importing pytwis when Sphinx
 # generates the HTML documentation.
 autodoc_mock_imports = ['pytwis']

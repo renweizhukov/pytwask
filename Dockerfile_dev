@@ -1,7 +1,12 @@
+# Base Python image
 FROM python:3.6-jessie
 
+# Create the directory for keeping the pytwask source code and 
+# set it as the working directory.
 RUN mkdir -p /usr/src/app/pytwask
 WORKDIR /usr/src/app/pytwask
 
+# Copy the pytwask source code to the working directory and 
+# install pytwask in editable mode from the working directory.
 COPY ./pytwask/ autopytwask.py MANIFEST.in README.rst requirements.txt setup.py /usr/src/app/pytwask/
 RUN pip install -e .

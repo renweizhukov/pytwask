@@ -2,52 +2,51 @@ version: '3'
  
 services:
   nginx:
-    restart: always
-    build: ./nginx
+    restart: on-failure:3
+    #build: ./nginx
+    image: renwei2/nginx_pytwask:latest
     ports:
       - '80:80'
     volumes:
-      - /www/static
-    environment:
-      - SERVER_NAME=${SERVER_NAME}
-    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/pytwask.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
-    volumes:
-      - 'tmp:/tmp/docker/'
+      - docker_socket:/tmp/docker/
+      - static_content:/usr/local/lib/python3.6/site-packages/pytwask/
     depends_on:
       - pytwask
 
   pytwask:
-    restart: always
-    build:
-      context: ../
-      dockerfile: Dockerfile
+    restart: on-failure:3
+    #build:
+    #  context: ../
+    #  dockerfile: Dockerfile
+    image: renwei2/pytwask:latest
     expose:
       - "8000"
     environment:
       - FLASK_APP=autopytwask
+      # Production environment
       - PYTWASK_ENV=prod
+      # Socket file for connecting pytwask and redis
       - REDIS_DB_SOCKET=/tmp/docker/redis.sock
-    command: gunicorn -b unix:/tmp/docker/pytwask.sock -m 007 -w 4 autopytwask:app
+    command: gunicorn -b unix:/tmp/docker/pytwask.sock -w 4 autopytwask:app
     volumes:
-      - 'tmp:/tmp/docker/'
+      - docker_socket:/tmp/docker/
+      - static_content:/usr/local/lib/python3.6/site-packages/pytwask/
     depends_on:
       - redis
   
   redis:
-    restart: always
-    image: 'redis:4.0.9'
+    restart: on-failure:3
+    #build: ./redis
+    image: renwei2/redis_socket_pytwask:latest
     command: redis-server /etc/redis/redis.conf
     volumes:
-      - ./redis/redis.conf:/etc/redis/redis.conf
-      - 'redis:/data'
-      - 'tmp:/tmp/docker/'
-      
-  tmp:
-    image: busybox
-    command: chmod -R 777 /tmp/docker
-    volumes:
-      - /tmp/docker/
+      - docker_socket:/tmp/docker/
       
 volumes:
-  redis:
-  tmp:
+  # This shared named volume docker_socket will store two UNIX domain socket 
+  # file: one for connecting nginx with gunicorn and the other for connecting 
+  # pytwask and redis.
+  docker_socket:
+  # This shared named volume static_content will store the static content of 
+  # the Flask application.
+  static_content:

@@ -1,8 +1,9 @@
-# pytwask
+pytwask
+=======
 
 A toy-twitter-clone frontend using Python and Flask. 
 
-To run this Flask application,
+To run this Flask application locally in the production mode,
 
 ```bash
 $ pip install pytwask
@@ -11,7 +12,38 @@ $ export PYTWASK_ENV=prod
 $ flask run
 ```
 
-## 1. Features
+For how to run the application in the development mode, please refer to [Section 5](#5-development). 
+
+For how to deploy the application via docker, please refer to [Section 4.2](#42-deploy-the-flask-application-via-docker).
+
+Table of Contents
+=================
+
+   * [1. Features](#1-features)
+   * [2. Backend database](#2-backend-database)
+   * [3. MTV architecture](#3-mtv-architecture)
+   * [4. Deployment](#4-deployment)
+      * [4.1. Deploy the Flask application in the cloud.](#41-deploy-the-flask-application-in-the-cloud)
+         * [4.1.1. Install Python 3.6, pip, pip3, virtualenvwrapper.](#411-install-python-36-pip-pip3-virtualenvwrapper)
+         * [4.1.2. Create a separate user which will run the Flask application.](#412-create-a-separate-user-which-will-run-the-flask-application)
+         * [4.1.3. Create the virtual environment for running the Flask application.](#413-create-the-virtual-environment-for-running-the-flask-application)
+         * [4.1.4. Install the Python WSGI HTTP server Gunicorn and the Flask application <code>pytwask</code> in the above virtual environment <code>flask-apps</code>.](#414-install-the-python-wsgi-http-server-gunicorn-and-the-flask-application-pytwask-in-the-above-virtual-environment-flask-apps)
+         * [4.1.5. Install and configure nginx.](#415-install-and-configure-nginx)
+         * [4.1.6. Start a Gunicorn process to serve the Flask application.](#416-start-a-gunicorn-process-to-serve-the-flask-application)
+         * [4.1.7. (Optional) Create a systemd unit file and enable the Gunicorn process as a service.](#417-optional-create-a-systemd-unit-file-and-enable-the-gunicorn-process-as-a-service)
+      * [4.2. Deploy the Flask application via docker.](#42-deploy-the-flask-application-via-docker)
+         * [4.2.1 Install docker and docker-compose.](#421-install-docker-and-docker-compose)
+         * [4.2.2 Download the docker-compose yml file.](#422-download-the-docker-compose-yml-file)
+         * [4.2.3 Build services.](#423-build-services)
+         * [4.2.4 Create and start containers.](#424-create-and-start-containers)
+      * [4.3. Troubleshooting](#43-troubleshooting)
+         * [4.3.1. <a href="https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader" rel="nofollow">Errors while reloading .bashrc for <code>virtualenvwrapper</code></a>.](#431-errors-while-reloading-bashrc-for-virtualenvwrapper)
+         * [4.3.2. <a href="https://askubuntu.com/questions/764222/nginx-installation-error-in-ubuntu-16-04" rel="nofollow">Errors while installing nginx</a>.](#432-errors-while-installing-nginx)
+   * [5. Development](#5-development)
+   * [6. PEP8](#6-pep8)
+   * [7. README.rst](#7-readmerst)
+
+# 1. Features
 
 This module implements the frontend for a simplified Twitter clone based on Flask. 
 
@@ -40,7 +72,7 @@ TODOs:
 * Edit/Delete tweets
 * And more
 
-## 2. Backend database
+# 2. Backend database
 
 Although currently we only have Redis as the only type of backend database, we can easily switch to another type of backend database as long as the backend module conforms to the same interface as the Redis backend module `pytwis`. 
 
@@ -54,7 +86,7 @@ $ flash run
 
 Note that the UNIX domain socket is by default disabled in Redis and you need to manually enable it in the Redis configuration file (usually `/etc/redis/redis.conf`) before use it.
 
-## 3. MTV architecture
+# 3. MTV architecture
 
 This Flask application follows the typical Flask Model-Template-View pattern. Its directory layout follows the ones given at 
 
@@ -78,13 +110,13 @@ Specifically,
     └── tweets        # The tweets blueprint
 ```
 
-## 4. Deployment
+# 4. Deployment
 
-### 4.1. Deploy the Flask application in the cloud.
+## 4.1. Deploy the Flask application in the cloud.
 
 Take the Amazon Web Service (AWS) as an example. Assume that we have created an EC2 instance with Ubuntu 16.04LTS, exposed its HTTP port 80, and SSH'ed into it.
 
-  4.1.1. Install Python 3.6, pip, pip3, virtualenvwrapper.
+### 4.1.1. Install Python 3.6, pip, pip3, virtualenvwrapper.
 
   (1) Install Python 3.6 from source.
 
@@ -118,7 +150,7 @@ $ sudo apt install python-pip python3-pip
 $ sudo pip3 install virtualenvwrapper
 ```
 
-  4.1.2. Create a separate user which will run the Flask application.
+### 4.1.2. Create a separate user which will run the Flask application.
 
 We should never run the Flask application as root. If we do that, once the Flask application is compromised somehow, the attacker will gain access to the entire system.
 
@@ -126,7 +158,7 @@ We should never run the Flask application as root. If we do that, once the Flask
 $ sudo adduser flask-apps
 ```
 
-  4.1.3. Create the virtual environment for running the Flask application.
+### 4.1.3. Create the virtual environment for running the Flask application.
 
   (1) Set up `virtualenvwrapper` for the user `flask-apps`.
 
@@ -153,7 +185,7 @@ $ mkvirtualenv -p /usr/bin/python3.6 pytwask
 
 Note that the binary location of `python3.6` may vary on different machines but it can be easily found by `which python3.6`.
 
-  4.1.4. Install the Python WSGI HTTP server `Gunicorn` and the Flask application `pytwask` in the above virtual environment `flask-apps`.
+### 4.1.4. Install the Python WSGI HTTP server `Gunicorn` and the Flask application `pytwask` in the above virtual environment `flask-apps`.
 
 ```bash
 # After mkvirtualenv is done, the virtual environment flask-apps should be automatically activated. 
@@ -163,7 +195,7 @@ $ workon pytwask
 (pytwask) $ pip install gunicorn pytwask
 ```
 
-  4.1.5. Install and configure nginx.
+### 4.1.5. Install and configure nginx.
 
   (1) Install nginx.
 
@@ -233,7 +265,7 @@ $ sudo nginx -t
 $ sudo service nginx restart
 ```
 
-  4.1.6. Start a Gunicorn process to serve the Flask application.
+### 4.1.6. Start a Gunicorn process to serve the Flask application.
 
 ```bash
 $ sudo su - flask-apps
@@ -250,7 +282,7 @@ $ workon pytwask
 
 Note that the ampersand "&" will set the Gunicorn process off running in the background.
 
-  4.1.7. (Optional) Create a systemd unit file and enable the Gunicorn process as a service.
+### 4.1.7. (Optional) Create a systemd unit file and enable the Gunicorn process as a service.
 
 (1) Create a unit file ending in `.service` within the directory `/etc/systemd/system`.
 
@@ -318,13 +350,43 @@ $ sudo systemctl start pytwask
 $ sudo systemctl enable pytwask
 ```
 
-### 4.2. Deploy the Flask application via docker.
+## 4.2. Deploy the Flask application via docker.
 
-To be added.
+Via docker, this flask application can be deployed not only on Linux but also on Windows, but note that **when it is deployed on Docker for Windows, we need to switch to Linux containers**.
 
-### 4.3. Troubleshooting
+### 4.2.1 Install docker and docker-compose.
 
-  4.3.1. [Errors while reloading `.bashrc` for `virtualenvwrapper`](https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader).
+For docker, see https://docs.docker.com/install/.
+
+For docker-compose, see https://docs.docker.com/compose/install/#install-compose.
+
+### 4.2.2 Download the docker-compose yml file.
+
+```bash
+$ wget https://github.com/renweizhukov/pytwask/blob/master/docker/docker-compose.yml
+```
+
+### 4.2.3 Build services.
+
+```bash
+$ docker-compose build
+```
+
+### 4.2.4 Create and start containers.
+
+```bash
+$ docker-compose up -d
+```
+
+To stop and remove containers, networks, images, and volumes,
+
+```bash
+$ docker-compose down -v
+```
+
+## 4.3. Troubleshooting
+
+### 4.3.1. [Errors while reloading `.bashrc` for `virtualenvwrapper`](https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader).
 
 ```
 /usr/bin/python3: Error while finding spec for 'virtualenvwrapper.hook_loader' (<class 'ImportError'>: No module named 'virtualenvwrapper')
@@ -337,7 +399,7 @@ $ sudo apt install python3-pip
 $ sudo pip3 install virtualwrapperenv
 ```
 
-  4.3.2. [Errors while installing nginx](https://askubuntu.com/questions/764222/nginx-installation-error-in-ubuntu-16-04).
+### 4.3.2. [Errors while installing nginx](https://askubuntu.com/questions/764222/nginx-installation-error-in-ubuntu-16-04).
 
 To fix this, stop apache2 before installing nginx.
 
@@ -355,7 +417,7 @@ $ sudo update-rc.d apache2 disable
 $ sudo update-rc.d -f apache2 remove
 ```
 
-## 5. Development
+# 5. Development
 
 By default, this Flask application will run in the development mode where the Flask DebugToolbar is enabled.
 
@@ -367,7 +429,26 @@ $ export FLASK_APP=autopytwask
 $ flask run
 ```
 
-## 6. PEP8
+To launch the application in the development mode via docker, first install docker and docker-compose by following steps given in [Section 4.2](#42-deploy-the-flask-application-via-docker), and then build services, create and start containers.
+
+```bash
+$ git clone https://github.com/renweizhukov/pytwask.git
+$ cd docker
+
+# Build services.
+$ docker-compose -f docker-compose_dev.yml build
+
+# Create and start containers in the detach mode.
+$ docker-compose -f docker-compose_dev.yml up -d 
+```
+
+To stop and remove containers, networks, images, and volumes,
+
+```bash
+$ docker-compose -f docker-compose_dev.yml down -v
+```
+
+# 6. PEP8
 
 We use `pylint` to enforce the Python Style Guide PEP8.
 
@@ -377,7 +458,7 @@ $ pylint pytwask
 
 We have fixed all the convention violations, warnings, and errors in the package `pytwask`.
 
-## 7. README.rst
+# 7. README.rst
 
 README.rst is generated from README.md via `pandoc`.
 
