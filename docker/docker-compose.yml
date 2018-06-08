@@ -1,0 +1,53 @@
+version: '3'
+ 
+services:
+  nginx:
+    restart: always
+    build: ./nginx
+    ports:
+      - '80:80'
+    volumes:
+      - /www/static
+    environment:
+      - SERVER_NAME=${SERVER_NAME}
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/pytwask.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    volumes:
+      - 'tmp:/tmp/docker/'
+    depends_on:
+      - pytwask
+
+  pytwask:
+    restart: always
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+    environment:
+      - FLASK_APP=autopytwask
+      - PYTWASK_ENV=prod
+      - REDIS_DB_SOCKET=/tmp/docker/redis.sock
+    command: gunicorn -b unix:/tmp/docker/pytwask.sock -m 007 -w 4 autopytwask:app
+    volumes:
+      - 'tmp:/tmp/docker/'
+    depends_on:
+      - redis
+  
+  redis:
+    restart: always
+    image: 'redis:4.0.9'
+    command: redis-server /etc/redis/redis.conf
+    volumes:
+      - ./redis/redis.conf:/etc/redis/redis.conf
+      - 'redis:/data'
+      - 'tmp:/tmp/docker/'
+      
+  tmp:
+    image: busybox
+    command: chmod -R 777 /tmp/docker
+    volumes:
+      - /tmp/docker/
+      
+volumes:
+  redis:
+  tmp:

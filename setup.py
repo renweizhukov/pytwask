@@ -19,7 +19,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='pytwask',
-    version='0.1.6',
+    version='0.1.7',
     description='A twitter-toy-clone frontend using Python and Flask',
     long_description=long_description,
     # TODO: Replace url by the GitHub Pages.
@@ -47,10 +47,10 @@ setup(
         'pytwis',
         'setuptools',
     ],
-    # This project depends on a module `pytwis` only available 
+    # This project depends on a module `pytwis` only available
     # in Python 3.6 and later.
     python_requires='>=3.6',
-    scripts = [
+    scripts=[
         './autopytwask.py',
     ],
     project_urls={
