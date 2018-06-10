@@ -36,7 +36,7 @@ deploy:
     on:
       tags: true
     distributions: sdist bdist_wheel
-  - provide: script
+  - provider: script
     script: 'docker push renwei2/pytwask:latest_dev && [ ! -z "$version" ] && docker push "renwei2/pytwaks:${version}-dev" || true'
     on:
       branch: master
