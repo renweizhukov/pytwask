@@ -1,16 +1,42 @@
 language: python
 python:
-- '3.6'
+  - '3.6'
+sudo: required
+services:
+  - docker
 install:
-- pip install -r requirements.txt
-- pip install sphinx
+  - pip install -r requirements.txt
+  - pip install sphinx
+before_script:
+  - version=${${TRAVIS_TAG}#"v"}  # Remove the prefix "v" in the github tag.
+  - docker pull renwei2/pytwask:latest_dev || true
 script:
-- make docs
+  - make docs
+  - docker build --pull --cache-from renwei2/pytwask:latest_dev -f Dockerfile_dev -t renwei2/pytwask:latest_dev -t renwei2/pytwask:${version}-dev .
+  - docker-compose -f docker-compose_dev.yml build
+  - docker-compose -f docker-compose_dev.yml up -d
+after_script:
+  - docker images
+  - docker ps -a
+  - docker-compose -f docker-compose_dev.yml down -v
+before_deploy:
+  - docker login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD"
 deploy:
-  provider: pypi
-  user: renwei2
-  password:
-    secure: CrDmLCeZXNuNAnb4MsiH3ABr2oty9Rq88MMLBqbpUO/2N0n3V+jsi3lD9cMKIXkrk80uK2wipbbzS/3OBGskLxk+t+V0pd6x6WZ6SDt9AIZiLObAP/bSAknI0YKc2I9GcwpA7ubmzSMdtC9A3iFb9uer2LVjFOO880RuR6g/1Jjm3dreDGQOQqlcPZSX3JiTdybR/Xa+TR0fOMXQTAedEKR8kPdlSEp/Pva5qmk2DaJE2CvTtQZdsMuMe5k8CI0wpzOIfT4IAFTnjXNu8hns8y9vUT2Ck271AWPAloz59xJwsRQL8bMyF7Q+Gd0NqQXiXawM3rkGk1ZKsOYjYv6t7BuFRYP5pMHP30F+bj6k5cSz7GzLOZIfERnD28MPcE1XpMRBmUxQeeAg7G8TCv/oGkEhrRBF/JyXUw9WqpnAV513J6PTZr8cOhZshT9WWoLbSC6tNVt0cNRsD0vd3bx6WV9U02XNMyJ/vXfroOaYmnATGMbhxuFeWIzGn/JIMGOICqaf5t8bAtUMpPjmAOep05h8ClBQ7j3tCqc/n9xtAFBPXrOsKhuF5CI5DhPDvupM/cPEIbuoEMveRjfvLbFbklqyACMJPYBmebbbL4xHnIUIGZCMxK1otelwO5qHuHWNDLzMQaLD540zhzwGg+waDsaN1NJl3uYqol0WpKYRXts=
-  on:
-    tags: true
-  distributions: sdist bdist_wheel
+  - provider: pypi
+    user: renwei2
+    password:
+      secure: CrDmLCeZXNuNAnb4MsiH3ABr2oty9Rq88MMLBqbpUO/2N0n3V+jsi3lD9cMKIXkrk80uK2wipbbzS/3OBGskLxk+t+V0pd6x6WZ6SDt9AIZiLObAP/bSAknI0YKc2I9GcwpA7ubmzSMdtC9A3iFb9uer2LVjFOO880RuR6g/1Jjm3dreDGQOQqlcPZSX3JiTdybR/Xa+TR0fOMXQTAedEKR8kPdlSEp/Pva5qmk2DaJE2CvTtQZdsMuMe5k8CI0wpzOIfT4IAFTnjXNu8hns8y9vUT2Ck271AWPAloz59xJwsRQL8bMyF7Q+Gd0NqQXiXawM3rkGk1ZKsOYjYv6t7BuFRYP5pMHP30F+bj6k5cSz7GzLOZIfERnD28MPcE1XpMRBmUxQeeAg7G8TCv/oGkEhrRBF/JyXUw9WqpnAV513J6PTZr8cOhZshT9WWoLbSC6tNVt0cNRsD0vd3bx6WV9U02XNMyJ/vXfroOaYmnATGMbhxuFeWIzGn/JIMGOICqaf5t8bAtUMpPjmAOep05h8ClBQ7j3tCqc/n9xtAFBPXrOsKhuF5CI5DhPDvupM/cPEIbuoEMveRjfvLbFbklqyACMJPYBmebbbL4xHnIUIGZCMxK1otelwO5qHuHWNDLzMQaLD540zhzwGg+waDsaN1NJl3uYqol0WpKYRXts=
+    on:
+      tags: true
+    distributions: sdist bdist_wheel
+  - provide: script
+    script: docker push renwei2/pytwask:latest_dev && docker push renwei2/pytwaks:${version}-dev
+    on:
+      branch: master
+env:
+  matrix:
+  # REGISTRY_USERNAME=...
+  - secure: j/gzuFZbYesFPqOzSSCvskyFICuenE3VCHVGopxPMk8hCy5ItZeHxsJVoRGMHH67aUUSi2RTyU07AslcRDvagXEgs4Qrm/WgS3VQAT0QZ0ONDWtQbFxcCsZPQsZZawpugZilDFHBZ7jAd6VVA7iKEIn+ii6xqaoIsP74F8WnavTlLb4D+9zpizdPq7A0o5ZF6uAdiRAuusByG4A1yg8IoqIbOiALi3grz02ZKxW6ghRtyDW4mJ1iUaq+r5VXqkCzuRdfagROtUb/40qXkvebiIcIqyXaCWGQNOzdDPeNYIqwLbsl0x+B8hpHfpThAQvuio5xUbKCDrShHtzEvsurV+SxzL7Fv0x836ui5P5vcIqH60sdrqaBxony8bovhT2hoa0mnB+cdWKi868YsMgJYalgbW3YYYBeYZHPhxNBLCaN/rLTI6wNhmQhuVsrQsf8kqaPEb9SllS4+yFpRuI/PGk53rslfHgRUgSHZp4B5AHNVfeh/QEyxRM0Vfj9CYihW74KFrmaNpUgZDinTGa7smq+htEY4LBCDmp1xX9cXtoeLW2iIQJmqSzcDUDqb/vnFvCW403frIdaFNHaAX37mYASoTfvIM5plMjJW/iedyqhgaavhQu/3PDhqIj2aLICeWQSfQpzMQmWX/hMJ+6QQ9hnMRqySlIFWur0vr4X1UE=
+  # REGISTRY_PASSWORD=...
+  - secure: NrtjdcBq0PfrfeQhcVaDKqciT2XM44anioqkvEcNLkKe8yeveHnifWIoWJB13B+zS2gd1LW1PMP6ewl6FppNKu6AQ/6wNqn5a9SH1cTmi1psFnxw2s4xfLEaMvw/Re83ldz3VFky4hv5TulBnsEYppdcJEp5+9rzCMBGSnWHP3xXiBzMwEMd9oiph+I95E2biqEbewiUcCUbFy8kUOkn7HXMV/BEiA8/N6EqdImXtHfnYIgkarTAyTv9HmsiLRGIa9DdcpUB3Svz2X3Peoqq9iQ52jnbXo5sWPSKRQo2dYQt/WVD67pHwXbNVdbJq7lL/vIeMXGiq9BjqH0H1XVfcPwT9eqqX9wD1xwD6iPtTrgjO3OhYrR7z7bfbmtnZrStdU5Q0alSrBqmG5N4gSylYu+Ax/3fBK2KoZO4j07PiTCv0ktVUnIXlWPP3DYnXHOY1RXYm/522sommeAYupLJGFj8Be9+nvKh02nqRkLepmYMGuz/+U5FZHoOSjlg/yEMjDqZZMRbWHdPGT7Qb7aFTR0eDPxrhDf/y6vS/xeBJRdt5TQTivj0Y6utpKLcCxR1NNMLtZ0jXDIpoFswg3ri3GeYlF5TC/+QhVccJQ9DNDrkgAA1YRwNPRWFLqfBmVlMw+p1He7rINuMxZZej9m+vCC482+k8sIqOxHY5MICKA0=
+

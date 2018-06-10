@@ -7,7 +7,7 @@ services:
     # then uncomment the image section and comment out the build section.
     #image: renwei2/pytwask:latest_dev 
     build:
-      context: ../
+      context: ./
       dockerfile: Dockerfile_dev
     ports:
       - "5000:5000"

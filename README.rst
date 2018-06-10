@@ -162,7 +162,9 @@ and SSH’ed into it.
 4.1.1. Install Python 3.6, pip, pip3, virtualenvwrapper.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(1) Install Python 3.6 from source.
+::
+
+    (1) Install Python 3.6 from source.  
 
 .. code:: bash
 
@@ -182,13 +184,17 @@ and SSH’ed into it.
     $ python3.6 -V
     Python 3.6.5
 
-(2) Install pip and pip3.
+::
+
+    (2) Install pip and pip3.  
 
 .. code:: bash
 
     $ sudo apt install python-pip python3-pip
 
-(3) Install virtualenvwrapper.
+::
+
+    (3) Install virtualenvwrapper.  
 
 .. code:: bash
 
@@ -208,7 +214,9 @@ access to the entire system.
 4.1.3. Create the virtual environment for running the Flask application.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(1) Set up ``virtualenvwrapper`` for the user ``flask-apps``.
+::
+
+    (1) Set up `virtualenvwrapper` for the user `flask-apps`.
 
 .. code:: bash
 
@@ -223,8 +231,9 @@ Add the following lines in ``.bashrc``.
     export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
     source /usr/local/bin/virtualenvwrapper.sh
 
-(2) Reload ``.bashrc`` and create a virtual environment for running the
-    Flask application.
+::
+
+    (2) Reload `.bashrc` and create a virtual environment for running the Flask application.
 
 .. code:: bash
 
@@ -249,7 +258,9 @@ machines but it can be easily found by ``which python3.6``.
 4.1.5. Install and configure nginx.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(1) Install nginx.
+::
+
+    (1) Install nginx.
 
 .. code:: bash
 
@@ -258,16 +269,13 @@ machines but it can be easily found by ``which python3.6``.
 
     $ sudo apt install nginx
 
-(2) Configure nginx to proxy requests.
+::
 
--  Optimize the nginx parameter ``default_type`` for the Flask
-   application.
+    (2) Configure nginx to proxy requests.
 
-According to
-http://www.patricksoftwareblog.com/how-to-configure-nginx-for-a-flask-web-application/,
-for a Flask application that is generating dynamic HTML files, the
-parameter ``default_type`` should be changed to:
-``default_type text/html;``.
+    * Optimize the nginx parameter `default_type` for the Flask application.
+
+    According to http://www.patricksoftwareblog.com/how-to-configure-nginx-for-a-flask-web-application/, for a Flask application that is generating dynamic HTML files, the parameter `default_type` should be changed to: `default_type text/html;`.
 
 .. code:: bash
 
@@ -284,7 +292,9 @@ parameter ``default_type`` should be changed to:
         ......
     }
 
--  Create a configuration file for pytwask.
+::
+
+    * Create a configuration file for pytwask.
 
 .. code:: bash
 
@@ -305,20 +315,25 @@ Note that we will pass requests to the socket we defined using the
         }
     }
 
--  Enable the above server configuration by linking the file to the
-   ``sites-enabled`` directory.
+::
+
+    * Enable the above server configuration by linking the file to the `sites-enabled` directory.
 
 .. code:: bash
 
     $ sudo ln -s /etc/nginx/sites-available/pytwask /etc/nginx/sites-enabled
 
--  Test the configuration file for syntax error.
+::
+
+    * Test the configuration file for syntax error.
 
 .. code:: bash
 
     $ sudo nginx -t
 
--  Restart nginx to load the new configuration.
+::
+
+    * Restart nginx to load the new configuration.
 
 .. code:: bash
 
@@ -346,14 +361,17 @@ the background.
 4.1.7. (Optional) Create a systemd unit file and enable the Gunicorn process as a service.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(1) Create a unit file ending in ``.service`` within the directory
-    ``/etc/systemd/system``.
+::
+
+    (1) Create a unit file ending in `.service` within the directory `/etc/systemd/system`.
 
 .. code:: bash
 
     $ sudo vi /etc/systemd/system/pytwask.service
 
-(2) Add the section ``[Unit]`` to specify metadata and dependencies.
+::
+
+    (2) Add the section `[Unit]` to specify metadata and dependencies.
 
 ::
 
@@ -361,15 +379,15 @@ the background.
     Description=Gunicorn instance to serve pytwask
     After=network.target
 
-(3) Add the section ``[Service]`` to specify:
+::
 
--  the user ``flask-apps`` and group ``www-data`` that we want the
-   process to run under;
--  the working directory and set various environment variables;
--  the command to start the service.
+    (3) Add the section `[Service]` to specify:
 
-Note that we give the group ownership to group ``www-data`` so that
-nginx can communicate easily with the Gunicorn process.
+    * the user `flask-apps` and group `www-data` that we want the process to run under;
+    * the working directory and set various environment variables;
+    * the command to start the service.
+
+    Note that we give the group ownership to group `www-data` so that nginx can communicate easily with the Gunicorn process.
 
 ::
 
@@ -387,8 +405,9 @@ nginx can communicate easily with the Gunicorn process.
     Environment="REDIS_DB_PASSWORD=[PASSWORD]"
     ExecStart=/home/flask-apps/.virtualenvs/pytwask/bin/gunicorn -b unix:/tmp/pytwask.sock -m 007 -w 4 autopytwask:app
 
-(4) Add the section ``[Install]`` to tell systemd what to link this
-    service to if we enable it to start at boot.
+::
+
+    (4) Add the section `[Install]` to tell systemd what to link this service to if we enable it to start at boot.
 
 ::
 
@@ -409,7 +428,9 @@ nginx can communicate easily with the Gunicorn process.
     [Install]
     WantedBy=multi-user.target
 
-(5) Start the Gunicorn service and enable it to start at boot.
+::
+
+    (5) Start the Gunicorn service and enable it to start at boot.
 
 .. code:: bash
 
@@ -436,7 +457,7 @@ https://docs.docker.com/compose/install/#install-compose.
 
 .. code:: bash
 
-    $ wget https://github.com/renweizhukov/pytwask/blob/master/docker/docker-compose.yml
+    $ wget https://raw.githubusercontent.com/renweizhukov/pytwask/master/docker/docker-compose.yml
 
 4.2.3 Build services.
 ~~~~~~~~~~~~~~~~~~~~~
@@ -461,8 +482,8 @@ To stop and remove containers, networks, images, and volumes,
 4.3. Troubleshooting
 --------------------
 
-4.3.1. `Errors while reloading ``.bashrc`` for ``virtualenvwrapper`` <https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader>`__.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.3.1. `Errors while reloading .bashrc for virtualenvwrapper <https://stackoverflow.com/questions/33216679/usr-bin-python3-error-while-finding-spec-for-virtualenvwrapper-hook-loader>`__.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
