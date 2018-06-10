@@ -12,9 +12,8 @@ before_script:
   - docker pull renwei2/pytwask:latest_dev || true
 script:
   - make docs
-  - echo ${version}
   - docker build --pull --cache-from renwei2/pytwask:latest_dev -f Dockerfile_dev -t renwei2/pytwask:latest_dev 
-  - [ -z "$version" ] && docker tag renwei2/pytwask:latest_dev "renwei2/pytwask:${version}-dev"
+  - [ ! -z "$version" ] && docker tag renwei2/pytwask:latest_dev "renwei2/pytwask:${version}-dev"
   - docker-compose -f docker-compose_dev.yml build
   - docker-compose -f docker-compose_dev.yml up -d
 after_script:
@@ -32,7 +31,7 @@ deploy:
       tags: true
     distributions: sdist bdist_wheel
   - provide: script
-    script: echo ${version} && docker push renwei2/pytwask:latest_dev && docker push "renwei2/pytwaks:${version}-dev"
+    script: docker push renwei2/pytwask:latest_dev && docker push "renwei2/pytwaks:${version}-dev"
     on:
       branch: master
 env:
