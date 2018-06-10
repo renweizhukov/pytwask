@@ -1,6 +1,10 @@
 pytwask
 =======
 
+**Source code and development docker image:** |Code Build Status|
+
+**Production docker image:** |Docker Build Status|
+
 A toy-twitter-clone frontend using Python and Flask.
 
 To run this Flask application locally in the production mode,
@@ -457,7 +461,7 @@ https://docs.docker.com/compose/install/#install-compose.
 
 .. code:: bash
 
-    $ wget https://raw.githubusercontent.com/renweizhukov/pytwask/master/docker/docker-compose.yml
+    $ wget https://raw.githubusercontent.com/renweizhukov/docker-pytwask/master/docker-compose.yml
 
 4.2.3 Build services.
 ~~~~~~~~~~~~~~~~~~~~~
@@ -539,7 +543,6 @@ services, create and start containers.
 .. code:: bash
 
     $ git clone https://github.com/renweizhukov/pytwask.git
-    $ cd docker
 
     # Build services.
     $ docker-compose -f docker-compose_dev.yml build
@@ -573,3 +576,8 @@ README.rst is generated from README.md via ``pandoc``.
 .. code:: bash
 
     $ pandoc --from=markdown --to=rst --output=README.rst README.md
+
+.. |Code Build Status| image:: https://travis-ci.org/renweizhukov/pytwask.svg?branch=master
+   :target: https://travis-ci.org/renweizhukov/pytwask
+.. |Docker Build Status| image:: https://travis-ci.org/renweizhukov/docker-pytwask.svg?branch=master
+   :target: https://travis-ci.org/renweizhukov/docker-pytwask

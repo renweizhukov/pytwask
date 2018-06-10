@@ -27,7 +27,7 @@ env:
   # REGISTRY_PASSWORD=...
   - secure: NrtjdcBq0PfrfeQhcVaDKqciT2XM44anioqkvEcNLkKe8yeveHnifWIoWJB13B+zS2gd1LW1PMP6ewl6FppNKu6AQ/6wNqn5a9SH1cTmi1psFnxw2s4xfLEaMvw/Re83ldz3VFky4hv5TulBnsEYppdcJEp5+9rzCMBGSnWHP3xXiBzMwEMd9oiph+I95E2biqEbewiUcCUbFy8kUOkn7HXMV/BEiA8/N6EqdImXtHfnYIgkarTAyTv9HmsiLRGIa9DdcpUB3Svz2X3Peoqq9iQ52jnbXo5sWPSKRQo2dYQt/WVD67pHwXbNVdbJq7lL/vIeMXGiq9BjqH0H1XVfcPwT9eqqX9wD1xwD6iPtTrgjO3OhYrR7z7bfbmtnZrStdU5Q0alSrBqmG5N4gSylYu+Ax/3fBK2KoZO4j07PiTCv0ktVUnIXlWPP3DYnXHOY1RXYm/522sommeAYupLJGFj8Be9+nvKh02nqRkLepmYMGuz/+U5FZHoOSjlg/yEMjDqZZMRbWHdPGT7Qb7aFTR0eDPxrhDf/y6vS/xeBJRdt5TQTivj0Y6utpKLcCxR1NNMLtZ0jXDIpoFswg3ri3GeYlF5TC/+QhVccJQ9DNDrkgAA1YRwNPRWFLqfBmVlMw+p1He7rINuMxZZej9m+vCC482+k8sIqOxHY5MICKA0=
 before_deploy:
-  - docker login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD"
+  - 'echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USERNAME" --password-stdin'
 deploy:
   - provider: pypi
     user: renwei2

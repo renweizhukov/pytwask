@@ -1,6 +1,10 @@
 pytwask
 =======
 
+**Source code and development docker image:** [![Code Build Status](https://travis-ci.org/renweizhukov/pytwask.svg?branch=master)](https://travis-ci.org/renweizhukov/pytwask)
+
+**Production docker image:** [![Docker Build Status](https://travis-ci.org/renweizhukov/docker-pytwask.svg?branch=master)](https://travis-ci.org/renweizhukov/docker-pytwask)
+
 A toy-twitter-clone frontend using Python and Flask. 
 
 To run this Flask application locally in the production mode,
@@ -364,7 +368,7 @@ For docker-compose, see https://docs.docker.com/compose/install/#install-compose
 ### 4.2.2 Download the docker-compose yml file.
 
 ```bash
-$ wget https://raw.githubusercontent.com/renweizhukov/pytwask/master/docker/docker-compose.yml
+$ wget https://raw.githubusercontent.com/renweizhukov/docker-pytwask/master/docker-compose.yml
 ```
 
 ### 4.2.3 Build services.
@@ -434,7 +438,6 @@ To launch the application in the development mode via docker, first install dock
 
 ```bash
 $ git clone https://github.com/renweizhukov/pytwask.git
-$ cd docker
 
 # Build services.
 $ docker-compose -f docker-compose_dev.yml build
